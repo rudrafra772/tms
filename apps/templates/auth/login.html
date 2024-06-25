@@ -1,0 +1,37 @@
+<section class="bg-gradient-to-br from-blue-200 to-gray-300 min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-md">
+        <a href="#" class="flex items-center justify-center">
+            <img class="h-12 w-auto" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="Logo">
+            <span class="ml-2 text-2xl font-semibold text-blue-800">Flowbite</span>
+        </a>
+        <div class="mt-8 bg-white dark:bg-gray-800 py-8 px-6 shadow rounded-lg sm:px-10">
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">Administrator Login</h1>
+            <form action="{% url "login" %}" method="post" class="space-y-6">
+                {% csrf_token %}
+                <div>
+                    <label for="text" class="block text-sm font-medium text-gray-900 dark:text-white">Username</label>
+                    <input id="username" name="username" type="username" autocomplete="username" required
+                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                </div>
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                    <input id="password" name="password" type="password" autocomplete="current-password" required
+                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                </div>
+                <div class="flex items-center">
+                    <input id="remember_me" name="remember_me" type="checkbox" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded dark:text-primary-500 dark:focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700">
+                    <label for="remember_me" class="ml-2 block text-sm text-gray-900 dark:text-white">Remember me</label>
+                </div>
+                <div>
+                    <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                        Sign In
+                    </button>
+                </div>
+            </form>
+            <div class="mt-6">
+               
+            </div>
+        </div>
+       
+    </div>
+</section>

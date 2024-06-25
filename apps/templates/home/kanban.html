@@ -1,0 +1,108 @@
+{% extends "base/base.html" %}
+
+{% block extra_css %}
+<style>
+  .draggable {
+    transition: transform 0.2s ease-in-out;
+  }
+  .draggable.dragging {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+</style>
+{% endblock extra_css %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8 max-w-screen-xl">
+  <h1 class="text-4xl font-bold text-center mb-3 text-gray-800">Kanban Board</h1>
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+    <div class="bg-white rounded-lg shadow-lg p-2">
+      <h2 class="text-2xl font-semibold mb-4 text-center bg-blue-500 text-white p-3 rounded-lg">To Do</h2>
+      <div class="bg-gray-100 p-2 rounded-lg shadow-md min-h-[300px]" id="todo-container">
+        <div class="bg-white p-4 mb-2 rounded-lg shadow-md draggable" draggable="true">Task 1: Lorem ipsum dolor sit amet...</div>
+        <div class="bg-white p-4 mb-2 rounded-lg shadow-md draggable" draggable="true">Task 2: Duis tristique massa eu elit...</div>
+        <div class="bg-white p-4 mb-2 rounded-lg shadow-md draggable" draggable="true">Task 3: Lorem ipsum dolor sit amet...</div>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-lg p-2">
+      <h2 class="text-2xl font-semibold mb-4 text-center bg-yellow-500 text-white p-3 rounded-lg">In Progress</h2>
+      <div class="bg-gray-100 p-2 rounded-lg shadow-md min-h-[300px]">
+        <!-- Placeholder for empty state -->
+      </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-lg p-2">
+      <h2 class="text-2xl font-semibold mb-4 text-center bg-purple-500 text-white p-3 rounded-lg">Testing</h2>
+      <div class="bg-gray-100 p-2 rounded-lg shadow-md min-h-[300px]">
+        <!-- Placeholder for empty state -->
+      </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-lg p-2">
+      <h2 class="text-2xl font-semibold mb-4 text-center bg-green-500 text-white p-3 rounded-lg">Done</h2>
+      <div class="bg-gray-100 p-2 rounded-lg shadow-md min-h-[300px]">
+        <!-- Placeholder for empty state -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const containers = document.querySelectorAll('.bg-gray-100');
+  
+      containers.forEach(container => {
+        new Sortable(container, {
+          group: 'kanban',
+          animation: 150,
+          ghostClass: 'bg-blue-100', // Class applied to the dragged item
+          dragClass: 'dragging', // Class for the dragging state
+          onEnd: function (evt) {
+            // Handle drag end event if needed
+            console.log('Dragged:', evt.item);
+          },
+        });
+      });
+    });
+  </script>
+  
+{% comment %} <script>
+  const draggables = document.querySelectorAll('.draggable');
+  const containers = document.querySelectorAll('.bg-gray-100');
+
+  draggables.forEach(draggable => {
+    draggable.addEventListener('dragstart', () => {
+      draggable.classList.add('dragging');
+    });
+
+    draggable.addEventListener('dragend', () => {
+      draggable.classList.remove('dragging');
+    });
+  });
+
+  containers.forEach(container => {
+    container.addEventListener('dragover', e => {
+      e.preventDefault();
+      const afterElement = getDragAfterElement(container, e.clientY);
+      const dragging = document.querySelector('.dragging');
+      if (afterElement == null) {
+        container.appendChild(dragging);
+      } else {
+        container.insertBefore(dragging, afterElement);
+      }
+    });
+  });
+
+  function getDragAfterElement(container, y) {
+    const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')];
+
+    return draggableElements.reduce((closest, child) => {
+      const box = child.getBoundingClientRect();
+      const offset = y - box.top - box.height / 2;
+      if (offset < 0 && offset > closest.offset) {
+        return { offset: offset, element: child };
+      } else {
+        return closest;
+      }
+    }, { offset: Number.NEGATIVE_INFINITY }).element;
+  }
+</script> {% endcomment %}
+{% endblock content %}
