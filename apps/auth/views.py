@@ -39,4 +39,4 @@ class LogoutView(View):
 
 class Home(View):
     def get(self, request):
-        return render(request, 'home/kanban.html')
+        return render(request, 'home/index.html')
