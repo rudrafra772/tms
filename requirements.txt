@@ -5,6 +5,7 @@ django-decouple==2.1
 django_compressor==4.5
 gunicorn==22.0.0
 packaging==24.1
+pillow==10.3.0
 psycopg2==2.9.9
 rcssmin==1.1.2
 rjsmin==1.2.2
