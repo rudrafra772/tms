@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,10 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-u1p3@7g0#dm^1us$=0dy9at9-pka)l+s3r3)04(tff*kb4k-ay'
+SECRET_KEY = config('SECREAT_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True 
+DEBUG = config('DEBUG', cast = bool) 
 
 ALLOWED_HOSTS = ['*']
 
@@ -77,12 +78,24 @@ WSGI_APPLICATION = 'tms.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
+if config('SERVER_PLATFORM') == 'render':
+    DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',  # PostgreSQL backend
+        'NAME': config('DB_NAME'),               # Database name
+        'USER': config('DB_USER'),               # Database username
+        'PASSWORD': config('DB_PASSWORD'),       # Database password
+        'HOST': config('DB_HOST'),                        # Database host (leave empty for localhost)
+        'PORT': config('DB_PORT'),                             # Database port (leave empty for default)
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation
