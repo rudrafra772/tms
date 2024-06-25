@@ -143,8 +143,9 @@ COMPRESS_ROOT = BASE_DIR / 'apps/static'
 COMPRESS_ENABLED = True
 
 STATICFILES_FINDERS = (
-    'whitenoise.storage.CompressedManifestStaticFilesStorage',
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
     )
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
