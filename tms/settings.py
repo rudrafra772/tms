@@ -119,11 +119,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-print(STATIC_URL, '*** STATIC_URL ***')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'apps\\static\\src')]
-print(STATICFILES_DIRS, '*** STATICFILES_DIRS ***')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-print(STATIC_ROOT, '*** STATIC_ROOT ***')
+
 
 # Media files (Uploads)
 MEDIA_URL = '/media/'
