@@ -73,13 +73,16 @@ TEMPLATES = [
     },
 ]
 
+AUTH_USER_MODEL = 'app_auth.UserModel'
+
+
 WSGI_APPLICATION = 'tms.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-if config('SERVER_PLATFORM') == 'render':
+if config('SERVER_PLATFORM') == 'local':
     DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',  # PostgreSQL backend
@@ -163,3 +166,5 @@ STATICFILES_FINDERS = (
     )
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
