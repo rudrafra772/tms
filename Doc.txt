@@ -1,0 +1,17 @@
+#############################################
+#Css commands for flowbite watch service
+#############################################
+
+npx tailwindcss -i ./static/src/input.css -o ./static/src/output.css --watch
+
+
+
+
+#############################################
+TODO
+#############################################
+# kanban board
+    -project crud
+    -task management crud
+#sprint board
+#Time Sheet

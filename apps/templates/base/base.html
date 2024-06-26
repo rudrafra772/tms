@@ -12,7 +12,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Django + Tailwind CSS + Flowbite</title>
 
+    
     {% compress css %}
+    <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+    <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{% static 'src/output.css' %}">
     {% endcompress %}
 
@@ -42,8 +45,10 @@
       <!-- End of new HTML -->
       <main class="p-4 md:ml-64 h-auto pt-20">
         {% block content %}
+        
         {% endblock content %}
-
+     
+        {% include "base/alerts.html" %}
         {% include "base/footer.html" %}
       </main>
       
