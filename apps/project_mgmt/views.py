@@ -31,13 +31,43 @@ class AddProject(View):
     
     def post(self, request):
         form = ProjectForm(request.POST)
-        print(form, '****')
         if form.is_valid():
-            project = form.save(commit=False)
-            project.user = self.request.user
-            project.save()
-            messages.success(request, "Project created successfully")
+            form.save()
+            messages.success(request, "Project created successfully.")
             return redirect('projects')
         else:
-            messages.error(request, "Error in creating project")
+            messages.error(request, "Error in creating project.")
         return redirect('add_project')
+    
+
+class EditProject(View):
+    def get(self, request, id):
+        project = Project.objects.get(id = id)
+        form = ProjectForm(instance=project)
+        context = {
+            'header':"Edit Project",
+            'form': form
+        }
+        return render(request, 'project_mgmt/project_form.html', context)
+    
+    def post(self, request, id):
+        project = Project.objects.get(id = id)
+        form = ProjectForm(request.POST, instance=project)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Project updated successfully.")
+            return redirect('projects')
+        else:
+            messages.error(request, "Error in updating project.")
+        return redirect('edit_project')
+
+
+class DeleteProject(View):
+    def post(self,request, id):
+        try:
+            project = Project.objects.get(id = id)
+            project.delete()
+            messages.success(request, "Project has been deleted successfully.")
+            return redirect('projects')
+        except Exception as e:
+            messages.error(request, f"{e}")

@@ -1,1 +1,1 @@
-from .CreateUpdate import CreatedUpdatedAt
+from .BaseModel import CreatedUpdatedAt, BaseModel

@@ -1,9 +1,9 @@
 from django.db import models
 from .project import Project
 from apps.auth.models import UserModel
-from utils.models import CreatedUpdatedAt
+from utils.models import BaseModel
 
-class Board(CreatedUpdatedAt, models.Model):
+class Board(BaseModel, models.Model):
     project = models.ForeignKey(Project, related_name='boards', on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
@@ -12,7 +12,7 @@ class Board(CreatedUpdatedAt, models.Model):
         return self.name
 
 
-class Column(CreatedUpdatedAt, models.Model):
+class Column(BaseModel, models.Model):
     board = models.ForeignKey(Board, related_name='columns', on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     order = models.PositiveIntegerField()
@@ -21,7 +21,7 @@ class Column(CreatedUpdatedAt, models.Model):
         return self.name
     
 
-class Task(CreatedUpdatedAt, models.Model):
+class Task(BaseModel, models.Model):
     column = models.ForeignKey(Column, related_name='tasks', on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
