@@ -18,6 +18,7 @@
     <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{% static 'src/output.css' %}">
     {% endcompress %}
+    <script src="https://unpkg.com/htmx.org@1.9.11" integrity="sha384-0gxUXCCR8yv9FM2b+U3FDbsKthCI66oH5IA9fHppQq9DDMHuMauqq1ZHBpJxQ0J0" crossorigin="anonymous"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
 
@@ -59,7 +60,7 @@
     {% include "auth/login.html" %}
   {% endif %}
 </div>
- 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
       <!-- JavaScript to show/hide spinner -->
@@ -76,6 +77,35 @@
           }, 1); // Replace 3000 with actual delay in milliseconds
         });
       </script>
+
+       <script>
+      htmx.onLoad(function(content) {
+        var sortables = content.querySelectorAll(".sortable");
+        for (var i = 0; i < sortables.length; i++) {
+          var sortable = sortables[i];
+          var sortableInstance = new Sortable(sortable, {
+              animation: 150,
+              ghostClass: 'blue-background-class',
+    
+              // Make the `.htmx-indicator` unsortable
+              filter: ".htmx-indicator",
+              onMove: function (evt) {
+                return evt.related.className.indexOf('htmx-indicator') === -1;
+              },
+    
+              // Disable sorting on the `end` event
+              onEnd: function (evt) {
+                this.option("disabled", true);
+              }
+          });
+    
+          // Re-enable sorting on the `htmx:afterSwap` event
+          sortable.addEventListener("htmx:afterSwap", function() {
+            sortableInstance.option("disabled", false);
+          });
+        }
+    })
+    </script>
        
 </body>
 

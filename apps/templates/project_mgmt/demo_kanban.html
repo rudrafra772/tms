@@ -14,39 +14,32 @@
 
 {% block content %}
 <div class="container mx-auto px-1 py-1 max-w-screen-xl">
-  <h1 class="text-3xl font-bold text-center mb-3 text-gray-800">{{board.project.name}} Kanban Board</h1>
-  <div class="bg-gradient-to-tr from-white to-gray-200 p-2 dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-    {% comment %} <div class="flex my-2 flex-wrap justify-end mb-2 space-y-2 sm:space-y-0 sm:space-x-2">
-      <a href="{% url "add_project" %}" class="w-full text-sm sm:w-auto py-2 px-2 bg-primary-500 text-white rounded-lg shadow hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:ring-offset-2">
-          Create Column
-      </a>
-  </div> {% endcomment %}
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
-      <div class="bg-white rounded-lg shadow-lg p-2">
-        <h2 class="text-2xl font-semibold mb-4 text-center bg-blue-500 text-white p-3 rounded-lg">To Do</h2>
-        <div class="bg-gray-100 p-2 rounded-lg shadow-md min-h-[300px]" id="todo-container">
-          <div class="bg-white p-4 mb-2 rounded-lg shadow-md draggable" draggable="true">Task 1: Lorem ipsum dolor sit amet...</div>
-          <div class="bg-white p-4 mb-2 rounded-lg shadow-md draggable" draggable="true">Task 2: Duis tristique massa eu elit...</div>
-          <div class="bg-white p-4 mb-2 rounded-lg shadow-md draggable" draggable="true">Task 3: Lorem ipsum dolor sit amet...</div>
-        </div>
+  <h1 class="text-3xl font-bold text-center mb-3 text-gray-800">Kanban Board</h1>
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+    <div class="bg-white rounded-lg shadow-lg p-2">
+      <h2 class="text-2xl font-semibold mb-4 text-center bg-blue-500 text-white p-3 rounded-lg">To Do</h2>
+      <div class="bg-gray-100 p-2 rounded-lg shadow-md min-h-[300px]" id="todo-container">
+        <div class="bg-white p-4 mb-2 rounded-lg shadow-md draggable" draggable="true">Task 1: Lorem ipsum dolor sit amet...</div>
+        <div class="bg-white p-4 mb-2 rounded-lg shadow-md draggable" draggable="true">Task 2: Duis tristique massa eu elit...</div>
+        <div class="bg-white p-4 mb-2 rounded-lg shadow-md draggable" draggable="true">Task 3: Lorem ipsum dolor sit amet...</div>
       </div>
-      <div class="bg-white rounded-lg shadow-lg p-2">
-        <h2 class="text-2xl font-semibold mb-4 text-center bg-yellow-500 text-white p-3 rounded-lg">In Progress</h2>
-        <div class="bg-gray-100 p-2 rounded-lg shadow-md min-h-[300px]">
-          <!-- Placeholder for empty state -->
-        </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-lg p-2">
+      <h2 class="text-2xl font-semibold mb-4 text-center bg-yellow-500 text-white p-3 rounded-lg">In Progress</h2>
+      <div class="bg-gray-100 p-2 rounded-lg shadow-md min-h-[300px]">
+        <!-- Placeholder for empty state -->
       </div>
-      <div class="bg-white rounded-lg shadow-lg p-2">
-        <h2 class="text-2xl font-semibold mb-4 text-center bg-purple-500 text-white p-3 rounded-lg">Testing</h2>
-        <div class="bg-gray-100 p-2 rounded-lg shadow-md min-h-[300px]">
-          <!-- Placeholder for empty state -->
-        </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-lg p-2">
+      <h2 class="text-2xl font-semibold mb-4 text-center bg-purple-500 text-white p-3 rounded-lg">Testing</h2>
+      <div class="bg-gray-100 p-2 rounded-lg shadow-md min-h-[300px]">
+        <!-- Placeholder for empty state -->
       </div>
-      <div class="bg-white rounded-lg shadow-lg p-2">
-        <h2 class="text-2xl font-semibold mb-4 text-center bg-green-500 text-white p-3 rounded-lg">Done</h2>
-        <div class="bg-gray-100 p-2 rounded-lg shadow-md min-h-[300px]">
-          <!-- Placeholder for empty state -->
-        </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-lg p-2">
+      <h2 class="text-2xl font-semibold mb-4 text-center bg-green-500 text-white p-3 rounded-lg">Done</h2>
+      <div class="bg-gray-100 p-2 rounded-lg shadow-md min-h-[300px]">
+        <!-- Placeholder for empty state -->
       </div>
     </div>
   </div>
