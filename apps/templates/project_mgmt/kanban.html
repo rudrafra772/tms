@@ -21,33 +21,18 @@
           Create Column
       </a>
   </div> {% endcomment %}
+  
     <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+
+      {% for colums in board_columns  %}
       <div class="bg-white rounded-lg shadow-lg p-2">
-        <h2 class="text-2xl font-semibold mb-4 text-center bg-blue-500 text-white p-3 rounded-lg">To Do</h2>
+        <h2 class="text-2xl font-semibold mb-4 text-center bg-{{colums.color}}-500 text-white p-3 rounded-lg">{{colums.name}}</h2>
         <div class="bg-gray-100 p-2 rounded-lg shadow-md min-h-[300px]" id="todo-container">
           <div class="bg-white p-4 mb-2 rounded-lg shadow-md draggable" draggable="true">Task 1: Lorem ipsum dolor sit amet...</div>
-          <div class="bg-white p-4 mb-2 rounded-lg shadow-md draggable" draggable="true">Task 2: Duis tristique massa eu elit...</div>
-          <div class="bg-white p-4 mb-2 rounded-lg shadow-md draggable" draggable="true">Task 3: Lorem ipsum dolor sit amet...</div>
+          
         </div>
       </div>
-      <div class="bg-white rounded-lg shadow-lg p-2">
-        <h2 class="text-2xl font-semibold mb-4 text-center bg-yellow-500 text-white p-3 rounded-lg">In Progress</h2>
-        <div class="bg-gray-100 p-2 rounded-lg shadow-md min-h-[300px]">
-          <!-- Placeholder for empty state -->
-        </div>
-      </div>
-      <div class="bg-white rounded-lg shadow-lg p-2">
-        <h2 class="text-2xl font-semibold mb-4 text-center bg-purple-500 text-white p-3 rounded-lg">Testing</h2>
-        <div class="bg-gray-100 p-2 rounded-lg shadow-md min-h-[300px]">
-          <!-- Placeholder for empty state -->
-        </div>
-      </div>
-      <div class="bg-white rounded-lg shadow-lg p-2">
-        <h2 class="text-2xl font-semibold mb-4 text-center bg-green-500 text-white p-3 rounded-lg">Done</h2>
-        <div class="bg-gray-100 p-2 rounded-lg shadow-md min-h-[300px]">
-          <!-- Placeholder for empty state -->
-        </div>
-      </div>
+      {% endfor %}
     </div>
   </div>
 </div>

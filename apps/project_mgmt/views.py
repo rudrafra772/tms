@@ -137,8 +137,10 @@ class DeleteBoardView(View):
 class KanBanBoardView(View):
     def get(self, request, board_id):
         board = Board.objects.get(id = board_id)
+        board_columns = Column.objects.filter(board = board).order_by('order')
         context = {
             'board':board,
+            'board_columns':board_columns
         }
         return render(request, 'project_mgmt/kanban.html', context)
     
@@ -208,3 +210,10 @@ class EditColumn(View):
             return redirect('column', board_id)
         messages.error(request, 'Error in updating column.')
         return redirect('edit_column', board_id, id)
+    
+class DeleteColumn(View):
+    def post(self, request, board_id, id):
+        column = Column.objects.get(id = id)
+        column.delete()
+        messages.success(request, "Column deleted successfully.")
+        return redirect('column', board_id)

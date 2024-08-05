@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'compressor',  # new
     'apps.project_mgmt',
     'fontawesomefree',
+    'apps.logger'
 ]
 
 MIDDLEWARE = [
@@ -174,3 +175,38 @@ STATICFILES_FINDERS = (
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'aws',
+            'level': 'INFO',
+        },
+        'db': {
+            'class': 'apps.logger.db_log_handler.DatabaseLogHandler',
+            'level': 'INFO',  # Or any level you prefer
+            'formatter': 'aws',
+        },
+    },
+    'loggers': {
+        'django': {
+            'level': 'INFO',
+            'handlers': ['console', 'db'],
+            'propagate': False,
+        },
+    },
+    'root': {
+        'level': 'INFO',  # Set the level for the root logger
+        'handlers': ['console', 'db'],
+    },
+    'formatters': {
+        'aws': {
+            'format': '{levelname} - {asctime} - {lineno} - {message}',
+            'style': '{',
+            'datefmt': "%Y-%m-%d %H:%M:%S"
+        },
+    }
+}
