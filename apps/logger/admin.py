@@ -10,9 +10,10 @@ from .models import StatusLog
 
 
 class StatusLogAdmin(admin.ModelAdmin):
-    list_display = ('get_level','colored_msg', 'create_datetime_format')
+    list_display = ('colored_msg', 'create_datetime_format')
     list_display_links = ('colored_msg',)
     list_filter = ('level',)
+    list_per_page = 1000
 
     def colored_msg(self, instance):
         if instance.level in [logging.NOTSET, logging.INFO]:
@@ -21,12 +22,9 @@ class StatusLogAdmin(admin.ModelAdmin):
             color = 'orange'
         else:
             color = 'red'
-        return format_html('<span style="color: {color};"> {msg}</span>', color=color, msg=instance.msg)
+        return format_html('<span style="color: {color};">{level} - {msg}</span>', level = str(instance.get_level_display()).upper(), color=color, msg=instance.msg)
 
     colored_msg.short_description = 'Message'
-
-    def get_level(self, instance):
-        return format_html('<b>{level}</b>', level = str(instance.get_level_display()).upper())
 
     def traceback(self, instance):
         return format_html('<pre><code>{content}</code></pre>', content=instance.trace if instance.trace else '')
