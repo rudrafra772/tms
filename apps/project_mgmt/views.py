@@ -137,7 +137,7 @@ class DeleteBoardView(View):
 class KanBanBoardView(View):
     def get(self, request, board_id):
         board = Board.objects.get(id = board_id)
-        board_columns = Column.objects.filter(board = board).order_by('order')
+        board_columns = Column.objects.filter(board = board).prefetch_related('tasks').order_by('order')
         context = {
             'board':board,
             'board_columns':board_columns
