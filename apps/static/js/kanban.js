@@ -36,7 +36,23 @@ function closeAddTaskModal(columnId) {
         dragClass: 'dragging', // Class for the dragging state
         onEnd: function (evt) {
           // Handle drag end event if needed
-          console.log('Dragged:', evt.item);
+          const taskId = evt.item.dataset.taskid; // Assuming you have a data-task-id attribute
+          //const newColumnId = evt.item.dataset.columsid; // Assuming you have a data-column-id attribute
+          const newOrder = evt.newIndex;
+
+          console.log(taskId, newOrder)
+
+
+           // Update hidden form fields
+          document.getElementById('task-id').value = taskId;
+          //document.getElementById('new-column-id').value = newColumnId;
+          document.getElementById('new-order').value = newOrder;
+
+          // Submit the form
+          form = document.getElementById('update-task-form');
+          console.log(form)
+          form.submit()
+
         },
       });
     });

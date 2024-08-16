@@ -8,6 +8,7 @@ from .choices import ColorChoices
 from django.db import transaction
 from django.http import JsonResponse
 from django.db import models
+from apps.auth.models import UserModel
 # Create your views here.
 
 
@@ -78,6 +79,10 @@ class DeleteProject(View):
             messages.error(request, f"{e}")
 
 
+######################################################################################
+#Kanban board (Main)
+######################################################################################
+
 class BoardView(View):
     def get(self, request):
         board_list = Board.objects.all()
@@ -134,17 +139,26 @@ class DeleteBoardView(View):
         board.delete()
         messages.success(request, 'Board deleted successfully.')
         return redirect('board')
+    
+######################################################################################
+#Kanban board (Sub)
+######################################################################################
 
 class KanBanBoardView(View):
     def get(self, request, board_id):
         board = Board.objects.get(id = board_id)
         board_columns = Column.objects.filter(board = board).prefetch_related('tasks').order_by('order')
+        users = UserModel.objects.all()
         context = {
             'board':board,
-            'board_columns':board_columns
+            'board_columns':board_columns,
+            'users': users
         }
         return render(request, 'project_mgmt/kanban.html', context)
     
+######################################################################################
+#Kanban board  Columns
+######################################################################################
 class ColumnView(View):
     def get(self, request, board_id):
         column_list = Column.objects.filter(board_id = board_id).order_by('order')
@@ -220,16 +234,44 @@ class DeleteColumn(View):
         return redirect('column', board_id)
     
 
+######################################################################################
+#Kanban board (Drapable) 
+######################################################################################
+
 class KanbanAddTask(View):
     def post(self, request, column_id):
         column = Column.objects.get(id = column_id)
-        form = AddTaskForm
+        form = AddTaskForm(request.POST)
         if form.is_valid():
             task = form.save(commit=False)
             task.column = column
             task.order = 0
             task.save()
-            return messages.success(request, "Task Added Successfully.")
+            messages.success(request, "Task Added Successfully.")
         else:
             error_messages = form.errors.as_text()
-            return messages.error(request, f"Error in adding task: {error_messages}")
+            messages.error(request, f"Error in adding task: {error_messages}")
+        return redirect('kanban_board', column.board.id)
+    
+
+class UpdateTask(View):
+    def post(self, request, column_id):
+        print(column_id, '***')
+        task_id = request.POST.get('task_id')
+        new_column_id = request.POST.get('new_column_id')
+        new_order = request.POST.get('new_order')
+        print(task_id, new_column_id, new_order)
+        try:
+            task = Task.objects.get(id=task_id)
+            new_column = Column.objects.get(id=new_column_id)
+            print(new_column)
+            task.column = new_column
+            task.order = new_order
+            task.save()
+            messages.success(request, "Task updated successfully.")
+        except Task.DoesNotExist:
+            messages.error(request, "Task not found.")
+        except Column.DoesNotExist:
+            messages.error(request, "Column not found.")
+        
+        return redirect('kanban_board', task.column.board.id)

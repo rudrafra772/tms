@@ -3,7 +3,7 @@ from .views import (
     KanbanBordView, ProjectView, AddProject, EditProject,
     DeleteProject, BoardView, AddBoardView, EditBoardView,
     DeleteBoardView, KanBanBoardView, AddColumnView, ColumnView,
-    UpdateColumnOrder, EditColumn, DeleteColumn, KanbanAddTask
+    UpdateColumnOrder, EditColumn, DeleteColumn, KanbanAddTask, UpdateTask
 )
 urlpatterns = [
     path('kanban-board/', KanbanBordView.as_view(), name='kanban_board'),
@@ -21,5 +21,6 @@ urlpatterns = [
     path('add-column/<int:board_id>/', AddColumnView.as_view(), name="add_column"),
     path('edit-column/<int:board_id>/<int:id>/', EditColumn.as_view(), name="edit_column"),
     path('delete-column/<int:board_id>/<int:id>/', DeleteColumn.as_view(), name="delete_column"),
-    path('kanban-add-task/', KanbanAddTask.as_view(), name="kanban_add_task")
+    path('kanban-add-task/<int:column_id>', KanbanAddTask.as_view(), name="kanban_add_task"),
+    path('update-task/<int:column_id>', UpdateTask.as_view(), name='update_task'),
 ]
