@@ -157,7 +157,7 @@ MEDIA_URL = '/media/'
 
 # Compression settings
 #############################################################
-COMPRESS_ROOT = os.path.join(BASE_DIR, 'static')
+COMPRESS_ROOT = os.path.join(BASE_DIR, 'apps/static')
 COMPRESS_ENABLED = True
 #############################################################
 
