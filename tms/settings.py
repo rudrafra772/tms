@@ -85,24 +85,13 @@ WSGI_APPLICATION = 'tms.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-if config('DEBUG', cast = bool) == False:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / "db.sqlite3",
-        }
-    }
-else:
-    DATABASES = {
+DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',      # Database engine
-        'NAME': config('DB_NAME'),                      # Database name
-        'USER': config('DB_USER'),                      # Database username
-        'PASSWORD': config('DB_PASSWORD'),              # Database password
-        'HOST': config('DB_HOST'),                      # Database host (leave empty for localhost)
-        'PORT': config('DB_PORT'),                      # Database port (leave empty for default)
-        }
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3",
     }
+}
+
 
 
 # Password validation
