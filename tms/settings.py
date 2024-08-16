@@ -163,6 +163,7 @@ COMPRESS_ENABLED = True
 
 
 if config("DEBUG", cast=bool) == True:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
     COMPRESS_ENABLED = True
 else:
     COMPRESS_ENABLED = False
@@ -175,7 +176,7 @@ STATICFILES_FINDERS = [
     'compressor.finders.CompressorFinder',
 ]
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 LOGGING = {
     'version': 1,
