@@ -40,7 +40,8 @@ class AddProject(View):
             messages.success(request, "Project created successfully.")
             return redirect('projects')
         else:
-            messages.error(request, "Error in creating project.")
+            message = form.errors.as_text()
+            messages.error(request, f"Error in creating project. {message}")
         return redirect('add_project')
     
 

@@ -87,13 +87,9 @@ WSGI_APPLICATION = 'tms.wsgi.application'
 
 if config('SERVER_PLATFORM') == 'render':
     DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',      # Database engine
-        'NAME': config('DB_NAME'),                      # Database name
-        'USER': config('DB_USER'),                      # Database username
-        'PASSWORD': config('DB_PASSWORD'),              # Database password
-        'HOST': config('DB_HOST'),                      # Database host (leave empty for localhost)
-        'PORT': config('DB_PORT'),                      # Database port (leave empty for default)
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / "db.sqlite3",
         }
     }
 else:
