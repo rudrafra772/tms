@@ -18,7 +18,7 @@ class Column(BaseModel, models.Model):
     board = models.ForeignKey(Board, related_name='columns', on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     order = models.PositiveIntegerField()
-    color = models.CharField(choices=ColorChoices.choices, null=True, blank=True)
+    color = models.CharField(choices=ColorChoices.choices, max_length=200, null=True, blank=True)
 
     def __str__(self):
         return self.name
