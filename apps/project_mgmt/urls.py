@@ -22,5 +22,5 @@ urlpatterns = [
     path('edit-column/<int:board_id>/<int:id>/', EditColumn.as_view(), name="edit_column"),
     path('delete-column/<int:board_id>/<int:id>/', DeleteColumn.as_view(), name="delete_column"),
     path('kanban-add-task/<int:column_id>', KanbanAddTask.as_view(), name="kanban_add_task"),
-    path('update-task/<int:column_id>', UpdateTask.as_view(), name='update_task'),
+    path('update-task/', UpdateTask.as_view(), name='update_task'),
 ]

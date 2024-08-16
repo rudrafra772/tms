@@ -9,6 +9,7 @@ from django.db import transaction
 from django.http import JsonResponse
 from django.db import models
 from apps.auth.models import UserModel
+from django.db.models import Prefetch
 # Create your views here.
 
 
@@ -147,7 +148,11 @@ class DeleteBoardView(View):
 class KanBanBoardView(View):
     def get(self, request, board_id):
         board = Board.objects.get(id = board_id)
-        board_columns = Column.objects.filter(board = board).prefetch_related('tasks').order_by('order')
+        tasks_prefetch = Prefetch(
+            'tasks',
+            queryset=Task.objects.order_by('order')  # Adjust 'order' to the appropriate field for task ordering
+        )
+        board_columns = Column.objects.filter(board = board).prefetch_related(tasks_prefetch).order_by('order')
         users = UserModel.objects.all()
         context = {
             'board':board,
@@ -255,8 +260,7 @@ class KanbanAddTask(View):
     
 
 class UpdateTask(View):
-    def post(self, request, column_id):
-        print(column_id, '***')
+    def post(self, request):
         task_id = request.POST.get('task_id')
         new_column_id = request.POST.get('new_column_id')
         new_order = request.POST.get('new_order')
