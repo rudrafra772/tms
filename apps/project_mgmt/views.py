@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
-from .forms import ProjectForm, CreateBoardForm, ColumnForm
+from .forms import ProjectForm, CreateBoardForm, ColumnForm, AddTaskForm
 from django.contrib import messages
 from .models import Project, Board, Task, Column
 from .choices import ColorChoices
@@ -217,3 +217,18 @@ class DeleteColumn(View):
         column.delete()
         messages.success(request, "Column deleted successfully.")
         return redirect('column', board_id)
+    
+
+class KanbanAddTask(View):
+    def post(self, request, column_id):
+        column = Column.objects.get(id = column_id)
+        form = AddTaskForm
+        if form.is_valid():
+            task = form.save(commit=False)
+            task.column = column
+            task.order = 0
+            task.save()
+            return messages.success(request, "Task Added Successfully.")
+        else:
+            error_messages = form.errors.as_text()
+            return messages.error(request, f"Error in adding task: {error_messages}")

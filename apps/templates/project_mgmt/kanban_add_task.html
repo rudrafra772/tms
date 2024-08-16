@@ -1,0 +1,45 @@
+  
+  
+  <!-- Modal HTML -->
+   <div id="AddtasksModal{{ colums.id }}" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 z-50 flex items-center justify-center">
+    <div class="bg-white rounded-lg shadow-lg p-6 max-w-7xl w-full">
+        <h2 class="text-2xl font-bold mb-4 text-center">Task Details</h2>
+        <div>
+        
+            <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
+                <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">{{header}}</h2>
+                <form  method="post">
+                    {% csrf_token %}
+                    <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+                        <div class="sm:col-span-2">
+                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                            <input type="text" name="name" id="name" {% if form.name.value %} value="{{form.name.value}}"{% endif %} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type product name" required="">
+                        </div>
+
+                        <div class="sm:col-span-2">
+                            <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                            <textarea id="id_description" name="description" rows="8" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Your description here">{% if form.description.value %}{{form.description.value}}{% endif %}</textarea>
+                        </div>
+                    </div>
+                    <button  type="submit" class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
+                        Add product
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="text-right">
+            <button class="btn btn-secondary px-4 py-2 text-sm font-medium rounded-lg bg-red-500 text-white" onclick="closeAddTaskModal('{{ colums.id }}')">Close</button>
+        </div>
+    </div>
+</div>
+  
+  
+    <script>
+      function openAddTaskModal(columnId) {
+          document.getElementById('AddtasksModal' + columnId).classList.remove('hidden');
+      }
+
+      function closeAddTaskModal(columnId) {
+          document.getElementById('AddtasksModal' + columnId).classList.add('hidden');
+      }
+  </script>
