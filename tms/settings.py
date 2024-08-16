@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'tms.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-if config('SERVER_PLATFORM') == 'render':
+if config('DEBUG', cast = bool) == False:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -135,42 +135,58 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
-
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'apps\\static\\src')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-
-# Media files (Uploads)
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-######################################################################
-#Compressor settings for caching the css
-######################################################################
-COMPRESS_ROOT = BASE_DIR / 'apps/static'
+ #############################################################
+# SRC: https://devcenter.heroku.com/articles/django-assets
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.9/howto/static-files/
+# Static files (CSS, JavaScript, Images)
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'apps/static'),
+)
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_URL = '/media/'
+
+# ############################################################
+# #TinyMce settings
+# ############################################################
+# TINYMCE_JS_URL = os.path.join(STATIC_URL, "tinymce/tinymce.min.js")
+# TINYMCE_COMPRESSOR = False
+# #############################################################
+
+
+# Compression settings
+#############################################################
+COMPRESS_ROOT = os.path.join(BASE_DIR, 'static')
 COMPRESS_ENABLED = True
+#############################################################
 
-STATICFILES_FINDERS = (
+
+if config("DEBUG", cast=bool) == True:
+    COMPRESS_ENABLED = True
+else:
+    COMPRESS_ENABLED = False
+
+
+# Additional settings
+STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
-    )
+]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-
 
 LOGGING = {
     'version': 1,
