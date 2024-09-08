@@ -2,60 +2,68 @@
 
 {% block content %}
 
-<div class="container mx-auto px-4 py-6 max-w-screen-xl">
-    <h1 class="text-5xl font-bold text-center mb-8 text-gray-900 dark:text-gray-100">Board Overview</h1>
+<div class="container mx-auto px-1 py-1 max-w-screen-xl">
+    <h1 class="text-4xl font-bold text-center mb-6 text-gray-800 dark:text-gray-100">Board</h1>
     {% include "base/message.html" %}
-    <section class="bg-gray-100 border border-gray-300 dark:bg-gray-900 p-6 rounded-lg shadow-lg">
-        <div class="flex flex-wrap justify-end mb-4 space-y-2 sm:space-y-0 sm:space-x-4">
-            <a href="{% url "add_board" %}" class="w-full sm:w-auto py-3 px-4 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-offset-2 transition ease-in-out duration-150">
-                Create New Board
+    <section class="bg-gray-50 border border-gray-200 dark:bg-gray-900 p-2 rounded-lg shadow-lg">
+        <div class="flex flex-wrap justify-end mb-2 space-y-2 sm:space-y-0 sm:space-x-2">
+            <a href="{% url "add_board" %}" class="w-full text-sm sm:w-auto py-2 px-2 bg-primary-500 text-white rounded-lg shadow hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:ring-offset-2">
+                Create Board
             </a>
         </div>
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-x-auto">
-            <table class="min-w-full text-sm text-left text-gray-600 dark:text-gray-300">
-                <thead class="text-xs uppercase bg-gray-800 text-gray-200 dark:bg-gray-700 dark:text-gray-300">
-                    <tr>
-                        <th scope="col" class="px-6 py-4">Name</th>
-                        <th scope="col" class="px-6 py-4">Board</th>
-                        <th scope="col" class="px-6 py-4">Columns</th>
-                        <th scope="col" class="px-6 py-4">Created By</th>
-                        <th scope="col" class="px-6 py-4">Created At</th>
-                        <th scope="col" class="px-6 py-4">Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white dark:bg-gray-800">
-                    {% for board in board_list %}
-                    <tr class="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition">
-                        <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                           {{ board.name }}
-                        </td>
-                        <td class="px-6 py-4">
-                            <a href="{% url "kanban_board" board.id %}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-200 dark:focus:ring-green-900 transition ease-in-out duration-150">
-                                View
-                            </a>
-                        </td>
-                        <td class="px-6 py-4">
-                            <a href="{% url "column" board.id %}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-yellow-600 rounded-lg hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-200 dark:focus:ring-yellow-900 transition ease-in-out duration-150">
-                                View
-                            </a>
-                        </td>
-                        <td class="px-6 py-4">{{ board.created_by.username }}</td>
-                        <td class="px-6 py-4">{{ board.created_at|date }}</td>
-                        <td class="px-6 py-4 flex space-x-2">
-                            <a href="{% url "edit_board" board.id %}" class="text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 rounded-lg px-3 py-2 transition ease-in-out duration-150">
-                                <i class="fas fa-pencil-alt"></i>
-                            </a>
-                            <button type="button" data-modal-target="deleteModal" data-modal-toggle="deleteModal" class="text-white bg-red-600 hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600 rounded-lg px-3 py-2 transition ease-in-out duration-150">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+            <div class="overflow-x-auto block">
+                <table class="min-w-full text-nowrap text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs uppercase bg-gray-700 text-gray-100 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">Name</th>
+                            <th scope="col" class="px-6 py-3">Board</th>
+                            <th scope="col" class="px-6 py-3">Columns</th>
+                            <th scope="col" class="px-6 py-3">Created By</th>
+                            <th scope="col" class="px-6 py-3">Created At</th>
+                            <th scope="col" class="px-6 py-3">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white dark:bg-gray-800">
+                        {% for board in board_list %}
+                        <tr class="border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                               {{board.name}}
+                            </th>
+                            <td class="px-6 py-4">
+                                <a href="{% url "kanban_board" board.id %}"  class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
+                                    View
+                                </a>
+                            </td>
+                            <td class="px-6 py-4">
+                                <a href="{% url "column" board.id %}"  class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
+                                    View
+                                </a>
+                            </td>
+                            <td class="px-6 py-4">{{board.created_by.username}}</td>
+                          
+                            <td class="px-6 py-4">{{board.created_at|date}}</td>
+                            <td class="px-6 py-4 items-center space-x-1 block">
+                                <a href="{% url "edit_board" board.id %}" class="inline-block text-white bg-blue-600 hover:bg-blue-800 dark:bg-blue-400 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-offset-2 rounded px-2.5 py-2">
+                                    <i class="fas fa-pencil"></i>
+                                </a>
+                                <form id="deleteForm" action="{% url "delete_board" board.id %}" method="post" class="inline-block">
+                                    {% csrf_token %}
+                                    <button type="button" id="deleteButton" data-modal-target="deleteModal" data-modal-toggle="deleteModal" class="text-white bg-red-600 hover:bg-red-800 dark:bg-red-400 dark:hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-200 focus:ring-offset-2 rounded px-3 py-2">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        <!-- Repeat similar rows for other products -->
+                    </tbody>
+                </table>
+            </div>
         </div>
     </section>
 </div>
+
 
 <!-- Main modal -->
 
