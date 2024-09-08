@@ -1,0 +1,30 @@
+<div class="flex flex-wrap justify-start mb-2 space-y-2 sm:space-y-0 sm:space-x-2">
+    <button
+       onclick="goBack(event)" 
+       class="w-full sm:w-auto text-sm py-2 px-6 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-full shadow-lg transform transition duration-300 ease-in-out hover:scale-105 hover:shadow-2xl hover:bg-gradient-to-r hover:from-blue-600 hover:to-cyan-500 focus:outline-none focus:ring-4 focus:ring-cyan-300 focus:ring-offset-2 flex items-center space-x-3 relative overflow-hidden">
+        
+        <!-- Animated Icon with Smooth Transition -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="transform transition-transform duration-300 ease-in-out group-hover:-translate-x-1">
+            <path d="M19 12H5"></path>
+            <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        
+        {% comment %} <!-- Back Text with Smooth Appearance -->
+        <span class="font-semibold relative z-10 transition-colors duration-300 ease-in-out">Back</span> {% endcomment %}
+        
+        <!-- Animated Background Glow Effect -->
+        <div class="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-500 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-20"></div>
+    </button>
+</div>
+
+{% block backurl %}
+{% endblock backurl %}
+<script>
+    function goBack(event) {
+      var backurl = $('#backurl').data();
+      console.log(backurl.name)
+      event.preventDefault();  // Prevent the default anchor behavior
+      window.location.href = backurl.name; // Navigate to the previous page
+    }
+    </script>
+

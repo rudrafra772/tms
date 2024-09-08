@@ -29,6 +29,12 @@
 {% block content %}
 <div class="container mx-auto px-1 py-1 max-w-screen-xl">
   <h1 class="text-3xl font-bold text-center mb-3 text-gray-800">{{ board.project.name }} Kanban Board</h1>
+  
+  {% block backurl %}
+  {% include "base/backbutton.html" %}
+  <meta id="backurl" data-name="{% url "board" %}">
+  {% endblock backurl %}
+  
   <div class="bg-gradient-to-tr from-white to-gray-200 p-2 dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
 
     {% include "base/message.html" %}
@@ -126,6 +132,7 @@
   <input type="hidden" name="new_column_id" id="new-column-id">
   <input type="hidden" name="new_order" id="new-order">
 </form>
+
 
 <script src="{% static 'js/kanban.js' %}"></script>
 {% endblock content %}
