@@ -178,6 +178,7 @@ class AddColumnView(View):
         form = ColumnForm()
         color_choices = ColorChoices.choices
         context = {
+            'board_id':board_id,
             'form':form,
             'header':"Create Column",
             'color_choices':color_choices
@@ -215,6 +216,7 @@ class EditColumn(View):
         form  = ColumnForm(instance=column)
         color_choices = ColorChoices.choices
         context = {
+            'board_id':board_id,
             'form':form,
             'header':"Edit Column",
             'color_choices':color_choices
