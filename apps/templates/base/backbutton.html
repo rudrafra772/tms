@@ -1,7 +1,7 @@
 <div class="flex flex-wrap justify-start mb-2 space-y-2 sm:space-y-0 sm:space-x-2">
-    <button
+    <a
        onclick="goBack(event)" 
-       class="w-full sm:w-auto text-sm py-2 px-6 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-full shadow-lg transform transition duration-300 ease-in-out hover:scale-105 hover:shadow-2xl hover:bg-gradient-to-r hover:from-blue-600 hover:to-cyan-500 focus:outline-none focus:ring-4 focus:ring-cyan-300 focus:ring-offset-2 flex items-center space-x-3 relative overflow-hidden">
+       class="border-none w-full sm:w-auto text-sm py-2 px-6 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-full shadow-lg transform transition duration-300 ease-in-out hover:scale-105 hover:shadow-2xl hover:bg-gradient-to-r hover:from-blue-600 hover:to-cyan-500 focus:outline-none focus:ring-4 focus:ring-cyan-300 focus:ring-offset-2 flex items-center space-x-3 relative overflow-hidden">
         
         <!-- Animated Icon with Smooth Transition -->
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="transform transition-transform duration-300 ease-in-out group-hover:-translate-x-1">
@@ -14,7 +14,7 @@
         
         <!-- Animated Background Glow Effect -->
         <div class="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-500 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-20"></div>
-    </button>
+    </a>
 </div>
 
 {% block backurl %}

@@ -1768,6 +1768,10 @@ input:checked + .toggle-bg {
   border-top-width: 1px;
 }
 
+.border-none {
+  border-style: none;
+}
+
 .\!border-primary-700 {
   --tw-border-opacity: 1 !important;
   border-color: rgb(29 78 216 / var(--tw-border-opacity)) !important;
