@@ -1,28 +1,39 @@
- // Function to open the task details modal
- function openTaskDetailsModal(taskId) {
-    // Perform an AJAX request to fetch task details
+// Function to open the task details modal
+function openTaskDetailsModal(taskId) {
+  document.getElementById('taskDetailsModal' + taskId).classList.remove('hidden');
+}
 
-    document.getElementById('taskDetailsModal'+taskId).classList.remove('hidden');
-    
-  }
+// Function to close the task details modal
+function closeTaskDetailsModal(taskId) {
+  document.getElementById('taskDetailsModal' + taskId).classList.add('hidden');
+}
 
-  // Function to close the task details modal
-  function closeTaskDetailsModal(taskId) {
-    document.getElementById('taskDetailsModal'+taskId).classList.add('hidden');
-  }
-
-
-
+// Function to open the add task modal
 function openAddTaskModal(columnId) {
-    document.getElementById('AddtasksModal' + columnId).classList.remove('hidden');
+  document.getElementById('AddtasksModal' + columnId).classList.remove('hidden');
 }
 
+// Function to close the add task modal
 function closeAddTaskModal(columnId) {
-    document.getElementById('AddtasksModal' + columnId).classList.add('hidden');
+  document.getElementById('AddtasksModal' + columnId).classList.add('hidden');
 }
 
+// Close modals on background click or escape key press
+window.addEventListener('click', function (event) {
+  const modals = document.querySelectorAll('.modal');
+  modals.forEach(modal => {
+      if (event.target === modal) {
+          modal.classList.add('hidden');
+      }
+  });
+});
 
-
+window.addEventListener('keydown', function (event) {
+  if (event.key === 'Escape') {
+      const modals = document.querySelectorAll('.modal');
+      modals.forEach(modal => modal.classList.add('hidden'));
+  }
+});
 
 document.addEventListener('DOMContentLoaded', function () {
   const containers = document.querySelectorAll('.bg-gray-100');
@@ -37,68 +48,87 @@ document.addEventListener('DOMContentLoaded', function () {
         const taskId = evt.item.dataset.taskid; // Get task ID
         const newColumnId = evt.to.closest('[data-columsid]').dataset.columsid; // Get new column ID
 
-        // Ensure all tasks in the new column are ordered correctly
+        // Update the specific dragged task's position
         const tasks = Array.from(evt.to.querySelectorAll('[data-taskid]'));
 
-        // Update order for each task in the new column
         tasks.forEach((task, index) => {
           if (task.dataset.taskid === taskId) {
+            // Set form values
             document.getElementById('task-id').value = taskId;
             document.getElementById('new-column-id').value = newColumnId;
             document.getElementById('new-order').value = index;
           }
         });
 
-        // Submit the form
-        document.getElementById('update-task-form').submit();
+        // Save the current scroll position
+        const scrollPosition = window.scrollY;
+
+        // Use AJAX to submit the form without refreshing the page
+        const form = document.getElementById('update-task-form');
+        const formData = new FormData(form);
+        const xhr = new XMLHttpRequest();
+
+        xhr.open('POST', form.action, true);
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); // Indicate AJAX request
+
+        xhr.onload = function () {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            const response = JSON.parse(xhr.responseText);
+            if (response.success) {
+              console.log('Task updated successfully.');
+            } else {
+              console.log('Error: ' + (response.error || 'An error occurred.'));
+            }
+          } else {
+            console.log('Failed to update task. Server returned status ' + xhr.status);
+          }
+          // Restore scroll position after the form is submitted
+          window.scrollTo(0, scrollPosition);
+        };
+
+        xhr.onerror = function () {
+          alert('An error occurred during the AJAX request.');
+          // Restore scroll position after the form is submitted
+          window.scrollTo(0, scrollPosition);
+        };
+
+        xhr.send(formData);
       },
     });
   });
 });
 
 
-
-
-
-
 // Function to match the height of all columns
 function matchColumnHeights() {
-    let maxHeight = 0;
-    const columns = document.querySelectorAll('.column-content');
-    
-    // Reset heights to auto to recalculate the heights
-    columns.forEach(column => column.style.height = 'auto');
-    
-    // Calculate the maximum height
-    columns.forEach(column => {
+  let maxHeight = 0;
+  const columns = document.querySelectorAll('.column-content');
+  
+  // Reset heights to auto to recalculate the heights
+  columns.forEach(column => column.style.height = 'auto');
+  
+  // Calculate the maximum height
+  columns.forEach(column => {
       const height = column.offsetHeight;
       if (height > maxHeight) {
-        maxHeight = height;
+          maxHeight = height;
       }
-    });
-    
-    // Set all columns to the maximum height
-    columns.forEach(column => column.style.height = `${maxHeight}px`);
-  }
-
-  // Match column heights on page load
-  matchColumnHeights();
-
-  // Match column heights when a task is dragged and dropped
-  document.querySelectorAll('.draggable').forEach(draggable => {
-    draggable.addEventListener('dragend', matchColumnHeights);
   });
+  
+  // Set all columns to the maximum height
+  columns.forEach(column => column.style.height = `${maxHeight}px`);
+}
 
-  // Initialize SortableJS on columns
-  const containers = document.querySelectorAll('.column-content');
-  containers.forEach(container => {
-    new Sortable(container, {
-      group: 'kanban',
-      animation: 150,
-      ghostClass: 'bg-blue-100',
-      dragClass: 'dragging',
-      onEnd: function (evt) {
-        console.log('Dragged:', evt.item);
-      },
-    });
-  });
+// Match column heights on page load
+matchColumnHeights();
+
+// Match column heights when a task is dragged and dropped
+document.querySelectorAll('.draggable').forEach(draggable => {
+  draggable.addEventListener('dragend', matchColumnHeights);
+});
+
+// Recalculate column heights on window resize
+window.addEventListener('resize', matchColumnHeights);
+
+
+

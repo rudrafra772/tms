@@ -203,6 +203,7 @@ class UpdateColumnOrder(View):
     @transaction.atomic
     def post(self, request):
         column_ids = request.POST.getlist('column_ids[]')
+        print(column_ids, '****ids****')
         board_id = request.POST.get('board_id')
         for index , column_id in enumerate(column_ids):
             column = Column.objects.get(pk=column_id)
@@ -254,30 +255,66 @@ class KanbanAddTask(View):
             task.column = column
             task.order = 0
             task.save()
+            Task.objects.filter(order__gte=0, column = column).exclude(id=task.id).update(order=models.F('order') + 1)
             messages.success(request, "Task Added Successfully.")
         else:
             error_messages = form.errors.as_text()
             messages.error(request, f"Error in adding task: {error_messages}")
         return redirect('kanban_board', column.board.id)
-    
+    from django.db.models import F
 
 class UpdateTask(View):
     def post(self, request):
         task_id = request.POST.get('task_id')
         new_column_id = request.POST.get('new_column_id')
-        new_order = request.POST.get('new_order')
-        print(task_id, new_column_id, new_order)
+        new_order = int(request.POST.get('new_order'))
+
         try:
             task = Task.objects.get(id=task_id)
             new_column = Column.objects.get(id=new_column_id)
-            print(new_column)
+            old_order = task.order
+            old_column = task.column
+
+            # Moving within the same column
+            if old_column == new_column:
+                if old_order > new_order:
+                    # Moving up: shift tasks between new_order and old_order down
+                    Task.objects.filter(
+                        column=new_column,
+                        order__gte=new_order,
+                        order__lt=old_order
+                    ).update(order=models.F('order') + 1)
+                elif old_order < new_order:
+                    # Moving down: shift tasks between old_order and new_order up
+                    Task.objects.filter(
+                        column=new_column,
+                        order__gt=old_order,
+                        order__lte=new_order
+                    ).update(order=models.F('order') - 1)
+
+            # Moving to a different column
+            else:
+                # Adjust the order in the old column
+                Task.objects.filter(
+                    column=old_column,
+                    order__gt=old_order
+                ).update(order=models.F('order') - 1)
+
+                # Shift tasks in the new column
+                Task.objects.filter(
+                    column=new_column,
+                    order__gte=new_order
+                ).update(order=models.F('order') + 1)
+
+            # Update the task's column and order
             task.column = new_column
             task.order = new_order
             task.save()
-            messages.success(request, "Task updated successfully.")
+
         except Task.DoesNotExist:
-            messages.error(request, "Task not found.")
+            return JsonResponse({'success': False, 'error': 'Task not found'}, status=404)
         except Column.DoesNotExist:
-            messages.error(request, "Column not found.")
-        
-        return redirect('kanban_board', task.column.board.id)
+            return JsonResponse({'success': False, 'error': 'Column not found'}, status=404)
+
+        return JsonResponse({'success': True})
+
