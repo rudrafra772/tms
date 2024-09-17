@@ -1,0 +1,22 @@
+[run]
+branch = True
+source = .
+
+[report]
+omit =
+    */migrations/*
+    */tests/*
+    */admin.py
+    */__init__.py
+    */manage.py
+    */apps.py
+    */settings.py
+    */wsgi.py
+    */asgi.py
+    */urls.py
+    */forms.py
+    */serializers.py
+    */admin.py
+    */urls.py
+    */static/*
+    */templates/*
