@@ -86,7 +86,7 @@ class DeleteProject(View):
 
 class BoardView(View):
     def get(self, request):
-        board_list = Board.objects.all()
+        board_list = Board.objects.values('id', 'name', 'created_by__username','created_at').prefetch_related('created_by')
         context = {
             'board_list': board_list
         }
@@ -95,7 +95,7 @@ class BoardView(View):
 class AddBoardView(View):
     def get(self, request):
         form = CreateBoardForm()
-        project_list = Project.objects.all()
+        project_list = Project.objects.values('id', 'name')
         context = {
             'form': form,
             'project_list':project_list,
@@ -115,7 +115,7 @@ class AddBoardView(View):
 class EditBoardView(View):
     def get(self, request, id):
         board = Board.objects.get(id = id)
-        project_list = Project.objects.all()
+        project_list = Project.objects.values('id','name')
         form = CreateBoardForm(instance= board)
         context = {
             'form': form,
@@ -153,7 +153,7 @@ class KanBanBoardView(View):
             queryset=Task.objects.order_by('order')  # Adjust 'order' to the appropriate field for task ordering
         )
         board_columns = Column.objects.filter(board = board).prefetch_related(tasks_prefetch).order_by('order')
-        users = UserModel.objects.all()
+        users = UserModel.objects.values('id')
         context = {
             'board':board,
             'board_columns':board_columns,
@@ -203,7 +203,6 @@ class UpdateColumnOrder(View):
     @transaction.atomic
     def post(self, request):
         column_ids = request.POST.getlist('column_ids[]')
-        print(column_ids, '****ids****')
         board_id = request.POST.get('board_id')
         for index , column_id in enumerate(column_ids):
             column = Column.objects.get(pk=column_id)
