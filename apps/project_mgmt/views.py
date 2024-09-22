@@ -20,7 +20,7 @@ class KanbanBordView(View):
 
 class ProjectView(View):
     def get(self, request):
-        projects_list = Project.objects.all()
+        projects_list = Project.objects.select_related('created_by').values('id', 'name', 'description', 'created_by__username', 'created_at')
         context = {
             'project_list': projects_list
         }
