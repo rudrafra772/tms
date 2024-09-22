@@ -1368,6 +1368,18 @@ input:checked + .toggle-bg {
   height: 100vh;
 }
 
+.h-\[80\%\] {
+  height: 80%;
+}
+
+.h-\[90\%\] {
+  height: 90%;
+}
+
+.h-\[85\%\] {
+  height: 85%;
+}
+
 .min-h-\[300px\] {
   min-height: 300px;
 }
@@ -2943,6 +2955,22 @@ input:checked + .toggle-bg {
 
   .sm\:h-\[80vh\] {
     height: 80vh;
+  }
+
+  .sm\:h-\[52vh\] {
+    height: 52vh;
+  }
+
+  .sm\:h-\[1vh\] {
+    height: 1vh;
+  }
+
+  .sm\:h-dvh {
+    height: 100dvh;
+  }
+
+  .sm\:h-\[\] {
+    height: ;
   }
 
   .sm\:w-auto {

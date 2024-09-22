@@ -324,3 +324,18 @@ class DeleteTask(View):
         task.delete()
         messages.success(request, "Task deleted successfully.")
         return redirect('kanban_board', board_id)
+    
+# views.py
+from django.core.files.storage import FileSystemStorage
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
+def upload_file(request):
+    if request.method == 'POST' and request.FILES:
+        file = request.FILES['file']
+        fs = FileSystemStorage()
+        filename = fs.save(file.name, file)
+        file_url = fs.url(filename)
+        return JsonResponse({'location': file_url})
+    return JsonResponse({'error': 'Invalid request'}, status=400)

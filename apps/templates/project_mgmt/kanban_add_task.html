@@ -9,14 +9,15 @@
 
     // Enable the sliding toolbar to display more tools before overflowing into the 3 dots menu
     toolbar_mode: 'sliding',
+    //menubar: 'file edit view insert format tools table help',
 
     // Add as many toolbar buttons as possible, and the rest will go under the 3 dots
-    toolbar: 'undo redo | bold italic underline strikethrough | forecolor backcolor | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect | bullist numlist outdent indent | link image media | emoticons charmap hr | insertdatetime table codesample | ltr rtl | searchreplace visualblocks code fullscreen preview | template toc help',
+    toolbar: 'undo redo bold italic underline strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect | bullist numlist outdent indent | link image media | emoticons charmap hr | insertdatetime table codesample | ltr rtl | searchreplace visualblocks code fullscreen preview | template toc help',
 
     branding: false,  // Disable TinyMCE branding and upgrade icon
-
+   
     image_uploadtab: true, // Enable the "Upload" tab in the image dialog
-    images_upload_url: '/your-upload-endpoint', // Replace with your image upload handler
+    images_upload_url: '/upload/', // Replace with your image upload handler
     imagetools_toolbar: "rotateleft rotateright | flipv fliph | editimage imageoptions",
 
     file_picker_types: 'image', // Allow only image files for the file picker
@@ -35,8 +36,11 @@
       };
       input.click();
     },
+    
 
     // Set up additional configurations for enhanced functionality
+    notification: false,
+    message: false,
     autosave_ask_before_unload: true,  // Enable autosave prompts before leaving the page
     autosave_interval: "30s",          // Set autosave interval
     autosave_restore_when_empty: true, // Restore content if the editor is empty
@@ -44,13 +48,15 @@
     height: 500,                       // Set the height of the editor
     table_default_attributes: { border: '1' }, // Add borders to tables by default
     insertdatetime_formats: ['%Y-%m-%d', '%H:%M:%S'], // Define datetime formats
+    
   });
+  
 </script>
 
 
 
 <div id="AddtasksModal{{ colums.id }}" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 z-50 flex items-center justify-center"> 
-    <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-7xl h-auto sm:h-[80vh] overflow-y-auto">
+    <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-7xl h-[85%] sm:h-[80vh] overflow-y-auto">
         <h2 class="text-2xl font-bold mb-4 text-center">Task</h2>
         <div class="w-full flex justify-center">
         
