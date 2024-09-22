@@ -16,19 +16,16 @@
 
             <!-- Task Details -->
           <div class="mb-2">
-            <div class="d-flex justify-content-between">
+            <div class="d-flex my-2 justify-content-between">
                 <div>
                     <small class="text-muted">
                         <i class="fas fa-user"></i> Assigned to: <strong>{{ task.user.username }}</strong>
                     </small>
                 </div>
-                <div>
-                    <small class="text-muted">
-                        <i class="fas fa-calendar-plus"></i> Created by: <strong>{{ task.created_by.username }}</strong>
-                    </small>
-                </div>
+               
             </div>
             <div class="d-flex justify-content-between">
+              
                 <div>
                     <small class="text-muted">
                         <i class="fas fa-clock"></i> Created at: <strong>{{ task.created_at|date:"Y-m-d h:i A" }}</strong>
@@ -39,13 +36,23 @@
                         <i class="fas fa-clock"></i> Updated at: <strong>{{ task.updated_at|date:"Y-m-d h:i A" }}</strong>
                     </small>
                 </div>
+                <div>
+                  <small class="text-muted">
+                      <i class="fas fa-calendar-plus"></i> Created by: <strong>{{ task.created_by.username }}</strong>
+                  </small>
+              </div>
+              <div>
+                <small class="text-muted">
+                    <i class="fas fa-calendar-plus"></i> Created by: <strong>{{ task.updated_by.username }}</strong>
+                </small>
+            </div>
             </div>
         </div>
 
             
           </div>
           <div class="text-right">
-            <button class="btn btn-secondary px-4 py-2 text-sm font-medium rounded-lg bg-gray-500 text-white" onclick="closeTaskDetailsModal({{task.id}})">Close</button>
+            <button class="btn btn-secondary px-4 py-2 text-sm font-medium rounded-lg bg-red-500 text-white" onclick="closeTaskDetailsModal({{task.id}})">Close</button>
           </div>
         </div>
       </div>

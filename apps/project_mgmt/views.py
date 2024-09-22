@@ -153,7 +153,7 @@ class KanBanBoardView(View):
             queryset=Task.objects.order_by('order')  # Adjust 'order' to the appropriate field for task ordering
         )
         board_columns = Column.objects.filter(board = board).prefetch_related(tasks_prefetch).order_by('order')
-        users = UserModel.objects.values('id')
+        users = UserModel.objects.values('id', 'username')
         context = {
             'board':board,
             'board_columns':board_columns,

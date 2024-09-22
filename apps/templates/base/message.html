@@ -30,4 +30,15 @@
         </svg>
     </button>
 </div>
+
+<script>
+    setTimeout(function() {
+        const toast = document.getElementById('toast-success');
+        if (toast) {
+            toast.style.display = 'none';
+        }
+    }, 8000); // 8 seconds
+</script>
 {% endfor %}
+
+
