@@ -11,7 +11,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Django + Tailwind CSS + Flowbite</title>
-
+    <!-- Place the first <script> tag in your HTML's <head> -->
+    <script src="https://cdn.tiny.cloud/1/e2cnnbzwb5hiwxsrl8ftb3efe9w17qifkkeiys4nxu61vin5/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="{% static 'tinymce/tinymce.min.js' %}"></script>
+    <script src="{% static 'tinymce/jquery.tinymce.min.js' %}"></script>
     
     {% compress css %}
     <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>

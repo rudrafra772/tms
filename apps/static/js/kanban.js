@@ -1,6 +1,27 @@
 // Function to open the task details modal
 function openTaskDetailsModal(taskId) {
-  document.getElementById('taskDetailsModal' + taskId).classList.remove('hidden');
+  // Show the modal
+  var modal = document.getElementById('taskDetailsModal' + taskId);
+  modal.classList.remove('hidden');
+
+  // Initialize TinyMCE for the specific textarea
+  initializeTinyMCE(`#id_description_${taskId}`);
+}
+
+// Function to initialize TinyMCE
+function initializeTinyMCE(selector) {
+  tinymce.init({
+    selector: selector,
+    plugins: 'advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste code help wordcount hr emoticons codesample directionality imagetools textpattern toc nonbreaking template autosave', // No plugins needed for read-only
+    toolbar: false, // No toolbar
+    menubar: false, // No menu bar
+    readonly: true, // Set the editor to read-only mode
+    branding: false,
+    statusbar: false, 
+    height: 500,
+    resize: false, // Disable resizing
+});
+
 }
 
 // Function to close the task details modal

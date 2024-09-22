@@ -242,7 +242,7 @@ class DeleteColumn(View):
     
 
 ######################################################################################
-#Kanban board (Drapable) 
+#Kanban board (Draggable) 
 ######################################################################################
 
 class KanbanAddTask(View):
@@ -317,3 +317,10 @@ class UpdateTask(View):
 
         return JsonResponse({'success': True})
 
+class DeleteTask(View):
+    def post(self, request, id):
+        task = Task.objects.get(id = id)
+        board_id = task.column.board.id
+        task.delete()
+        messages.success(request, "Task deleted successfully.")
+        return redirect('kanban_board', board_id)

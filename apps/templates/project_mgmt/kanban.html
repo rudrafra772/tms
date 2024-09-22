@@ -67,7 +67,7 @@
                   
                   <div class="mb-1 text-xs">
                     {% if task.description|length > 30 %}
-                      <p class="text-muted">{{ task.description|slice:":30" }}...</p>
+                      <p class="text-muted">{{ task.description|striptags|slice:":30" }}...</p>
                     {% else %}
                       <p class="text-muted">{{ task.description }}</p>
                     {% endif %}
@@ -98,9 +98,12 @@
                     <a href="#" class="btn btn-primary mx-1 p-1.5 text-xs font-medium rounded-lg bg-yellow-500 text-white">
                       <i class="fas fa-pen"></i> Edit
                     </a>
-                    <a href="#" class="btn btn-primary mx-1 p-1.5 text-xs font-medium rounded-lg bg-red-500 text-white">
-                      <i class="fas fa-trash"></i> Delete
-                    </a>
+                    <form id="deleteForm" method="post" class="">
+                      {% csrf_token %}
+                      <button type="button" onclick="get_action('{% url "delete_task" task.id %}')" id="deleteButton" data-modal-target="deleteModal" data-modal-toggle="deleteModal" class="btn btn-primary mx-1 p-1.5 text-xs font-medium rounded-lg bg-red-500 text-white">
+                          <i class="fas fa-trash"></i> Delete
+                      </button>
+                  </form>
                   </div>
                 </div>
               {% endfor %}

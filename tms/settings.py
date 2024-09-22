@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'compressor',  # new
     'apps.project_mgmt',
     'fontawesomefree',
-    'apps.logger'
+    'apps.logger',
+    'tinymce',
 ]
 
 MIDDLEWARE = [
@@ -147,12 +148,11 @@ STATICFILES_DIRS = (
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
 
-# ############################################################
-# #TinyMce settings
-# ############################################################
-# TINYMCE_JS_URL = os.path.join(STATIC_URL, "tinymce/tinymce.min.js")
-# TINYMCE_COMPRESSOR = False
-# #############################################################
+############################################################
+#TinyMce settings
+############################################################
+TINYMCE_JS_URL = os.path.join(STATIC_URL, "tinymce/tinymce.min.js")
+TINYMCE_COMPRESSOR = True
 
 
 # Compression settings
@@ -212,3 +212,16 @@ LOGGING = {
         },
     }
 }
+
+
+TINYMCE_DEFAULT_CONFIG = {
+    'selector': 'textarea',
+    'height': 500,
+    'width': '100%',
+    'plugins': 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+    'toolbar': 'undo redo | formatselect | bold italic backcolor | \
+                alignleft aligncenter alignright alignjustify | \
+                bullist numlist outdent indent | removeformat | help',
+}
+
+TINYMCE_API_KEY = 'e2cnnbzwb5hiwxsrl8ftb3efe9w17qifkkeiys4nxu61vin5'
