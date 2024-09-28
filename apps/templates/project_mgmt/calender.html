@@ -2,13 +2,14 @@
 
 {% block content %}
 
-<div class="container mx-auto px-1 py-1 max-w-screen overflow-hidden">
-  <h1 class="text-4xl font-bold text-center mb-6 text-gray-800 dark:text-gray-100">Calender</h1>
+<div class="mx-auto max-w-screen overflow-hidden">
+  <h1 class="text-4xl font-bold text-center mb-2 text-gray-800 dark:text-gray-100">Calendar</h1>
   {% include "base/message.html" %}
+
   <section class="bg-gray-50 border border-gray-200 dark:bg-gray-900 p-2 rounded-lg shadow-lg">
-   
-    <div class="container mx-auto mt-10">
-      <div class="flex justify-center my-5 p-4 text-center bg-blue-500 shadow-md rounded-lg text-white text-xl font-extrabold">
+    <div class="mx-auto mt-10 border-b p-2">
+    <div class="wrapper bg-white rounded shadow w-full overflow-x-auto">
+      <div class="flex justify-center  p-4 text-center bg-gray-500 shadow-md text-white text-xl font-extrabold">
         <form action="{% url "change_month" current_date %}" method="post">
           {% csrf_token %}
           <input type="number" name="previous" id="id_previous" hidden value="1">
@@ -32,34 +33,95 @@
       </form>
         
       </div>
-      <div class="grid grid-cols-7 md:gap-4 mb-5 sm:gap-2">
-        <!-- Days of the Week -->
-        <div class="md:p-4 sm:p-2 text-center bg-black text-white sm:text-xs md:text-xl md:font-extrabold shadow-md rounded-lg">Monday</div>
-        <div class="md:p-4 sm:p-2 text-center bg-black text-white sm:text-xs md:text-xl md:font-extrabold shadow-md rounded-lg">Tuesday</div>
-        <div class="md:p-4 sm:p-2 text-center bg-black text-white sm:text-xs md:text-xl md:font-extrabold shadow-md rounded-lg">Wednesday</div>
-        <div class="md:p-4 sm:p-2 text-center bg-black text-white sm:text-xs md:text-xl md:font-extrabold shadow-md rounded-lg">Thursday</div>
-        <div class="md:p-4 sm:p-2 text-center bg-black text-white sm:text-xs md:text-xl md:font-extrabold shadow-md rounded-lg">Friday</div>
-        <div class="md:p-4 sm:p-2 text-center bg-black text-white sm:text-xs md:text-xl md:font-extrabold shadow-md rounded-lg">Saturday</div>
-        <div class="md:p-4 sm:p-2 text-center bg-red-500 text-white sm:text-xs md:text-xl md:font-extrabold shadow-md rounded-lg">Sunday</div>
-
-        {% for week in calender %}
-        {% for date in week %}
-        {% if date.month == month %}
-        <!-- Days of the Month -->
-        <div class="md:p-4 sm:p-2  text-center cursor-pointer hover:bg-blue-500 hover:text-white shadow-md rounded-lg" data-date="">{{date.day}}</div>
-        {% else %}
-        <div class="md:p-4 sm:p-2  text-center bg-gray-300 shadow-md rounded-lg" data-date="">{{date.day}}</div>
-        {% endif %}
-        <!-- Continue adding other dates in similar fashion -->
-        {% endfor %}
-        {% endfor %}
-        
-        
-      </div>
+      <table class="w-full">
+        <thead>
+          <tr>
+           
+            <th class="p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
+              <span class="xl:block lg:block md:block sm:block hidden">Monday</span>
+              <span class="xl:hidden lg:hidden md:hidden sm:hidden block">Mon</span>
+            </th>
+            <th class="p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
+              <span class="xl:block lg:block md:block sm:block hidden">Tuesday</span>
+              <span class="xl:hidden lg:hidden md:hidden sm:hidden block">Tue</span>
+            </th>
+            <th class="p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
+              <span class="xl:block lg:block md:block sm:block hidden">Wednesday</span>
+              <span class="xl:hidden lg:hidden md:hidden sm:hidden block">Wed</span>
+            </th>
+            <th class="p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
+              <span class="xl:block lg:block md:block sm:block hidden">Thursday</span>
+              <span class="xl:hidden lg:hidden md:hidden sm:hidden block">Thu</span>
+            </th>
+            <th class="p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
+              <span class="xl:block lg:block md:block sm:block hidden">Friday</span>
+              <span class="xl:hidden lg:hidden md:hidden sm:hidden block">Fri</span>
+            </th>
+            <th class="p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
+              <span class="xl:block lg:block md:block sm:block hidden">Saturday</span>
+              <span class="xl:hidden lg:hidden md:hidden sm:hidden block">Sat</span>
+            </th>
+            <th class="p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
+              <span class="xl:block lg:block md:block sm:block hidden">Sunday</span>
+              <span class="xl:hidden lg:hidden md:hidden sm:hidden block">Sun</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for week in calender %}
+          <tr class="text-center h-20">
+            {% for date in week %}
+            {% if date.month == month %}
+              <td class="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-blue-300 ">
+                <div class="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
+                  <div class="top h-5 w-full">
+                    <span class="text-gray-500">{{date.day}}</span>
+                  </div>
+                  <div class="bottom flex-grow h-30 py-1 w-full cursor-pointer">
+                    <div
+                      class="event bg-purple-400 text-white rounded p-1 text-sm mb-1"
+                    >
+                      <span class="event-name">
+                        Meeting
+                      </span>
+                      <span class="time">
+                        12:00~14:00
+                      </span>
+                    </div>
+                    <div
+                      class="event bg-purple-400 text-white rounded p-1 text-sm mb-1"
+                    >
+                      <span class="event-name">
+                        Meeting
+                      </span>
+                      <span class="time">
+                        18:00~20:00
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            {% else %}
+            <td class="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition duration-500 ease hover:bg-gray-300 bg-gray-300">
+              <div class="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
+                <div class="top h-5 w-full">
+                  <span class="text-gray-500">{{date.day}}</span>
+                </div>
+                <div class="bottom flex-grow h-30 py-1 w-full ">
+                  
+                </div>
+              </div>
+            </td>
+            {% endif %}
+            {% endfor %}
+            
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
+  </div>
   </section>
 </div>
 
-{% comment %}  {% endcomment %}
-  
 {% endblock content %}
