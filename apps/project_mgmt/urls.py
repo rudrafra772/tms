@@ -3,7 +3,7 @@ from .views import (
     KanbanBordView, ProjectView, AddProject, EditProject,
     DeleteProject, BoardView, AddBoardView, EditBoardView,
     DeleteBoardView, KanBanBoardView, AddColumnView, ColumnView,
-    UpdateColumnOrder, EditColumn, DeleteColumn, KanbanAddTask, UpdateTask, DeleteTask, upload_file
+    UpdateColumnOrder, EditColumn, DeleteColumn, KanbanAddTask, UpdateTask, DeleteTask, upload_file, CalenderView, ChangeCalenderMonth
 )
 urlpatterns = [
     path('kanban-board/', KanbanBordView.as_view(), name='kanban_board'),
@@ -25,4 +25,6 @@ urlpatterns = [
     path('update-task/', UpdateTask.as_view(), name='update_task'),
     path('delete-task/<int:id>/', DeleteTask.as_view(), name="delete_task"),
     path('upload/', upload_file, name='upload_file'),
+    path('calender/', CalenderView.as_view(), name="calender"),
+    path('calender/<str:date>/', ChangeCalenderMonth.as_view(), name="change_month")
 ]

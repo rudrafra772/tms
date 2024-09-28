@@ -10,6 +10,8 @@ from django.http import JsonResponse
 from django.db import models
 from apps.auth.models import UserModel
 from django.db.models import Prefetch
+from calendar import Calendar
+from datetime import datetime, timedelta
 # Create your views here.
 
 
@@ -339,3 +341,47 @@ def upload_file(request):
         file_url = fs.url(filename)
         return JsonResponse({'location': file_url})
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
+#from django.utils.timezone import timedelta
+class CalenderView(View):
+    def get(self, request):
+        current_date = datetime.now().date()
+        calender = Calendar().monthdatescalendar(current_date.year, current_date.month)
+        context = {
+            'calender':calender,
+            'month':current_date.month, 
+            'year':current_date.year, 
+            'current_date':current_date
+        }
+        return render(request, 'project_mgmt/calender.html', context)
+
+class ChangeCalenderMonth(View):
+    def post(self, request, date):
+        previous = request.POST.get('previous')
+        next = request.POST.get('next')
+        current_date = datetime.strptime(date, "%Y-%m-%d").date()
+        first_date = current_date.replace(day=1)
+        if previous:
+            previous_month = first_date - timedelta(days= 1)
+            calender = Calendar().monthdatescalendar(previous_month.year, previous_month.month)
+            context = {
+                'calender':calender,
+                'month':previous_month.month, 
+                'year':previous_month.year, 
+                'current_date':previous_month
+            }
+            return render(request, 'project_mgmt/calender.html', context)
+        if next:
+            last_day_of_current_month = Calendar().monthdatescalendar(current_date.year, current_date.month)[-1]
+            last_day_of_current_month = last_day_of_current_month[-1]
+            next_month_date = last_day_of_current_month + timedelta(days=1)
+            calender = Calendar().monthdatescalendar(next_month_date.year, next_month_date.month)
+            context = {
+                'calender':calender,
+                'month':next_month_date.month, 
+                'year':next_month_date.year, 
+                'current_date':next_month_date
+            }
+            return render(request, 'project_mgmt/calender.html', context)
+        return render(request, 'project_mgmt/calender.html')
+        
