@@ -356,22 +356,22 @@ class CalenderView(View):
         return render(request, 'project_mgmt/calender.html', context)
 
 class ChangeCalenderMonth(View):
-    def post(self, request, date):
-        previous = request.POST.get('previous')
-        next = request.POST.get('next')
+    def get(self, request, date, next, prev):
         current_date = datetime.strptime(date, "%Y-%m-%d").date()
         first_date = current_date.replace(day=1)
-        if previous:
+        if prev == "1":
             previous_month = first_date - timedelta(days= 1)
             calender = Calendar().monthdatescalendar(previous_month.year, previous_month.month)
             context = {
                 'calender':calender,
                 'month':previous_month.month, 
                 'year':previous_month.year, 
-                'current_date':previous_month
-            }
+                'current_date':previous_month,
+                'next': 0,
+                'prev': 1,
+                }
             return render(request, 'project_mgmt/calender.html', context)
-        if next:
+        if next == "1":
             last_day_of_current_month = Calendar().monthdatescalendar(current_date.year, current_date.month)[-1]
             last_day_of_current_month = last_day_of_current_month[-1]
             next_month_date = last_day_of_current_month + timedelta(days=1)
@@ -380,7 +380,9 @@ class ChangeCalenderMonth(View):
                 'calender':calender,
                 'month':next_month_date.month, 
                 'year':next_month_date.year, 
-                'current_date':next_month_date
+                'current_date':next_month_date,
+                'next': 0,
+                'prev': 1,
             }
             return render(request, 'project_mgmt/calender.html', context)
         return render(request, 'project_mgmt/calender.html')

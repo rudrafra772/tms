@@ -26,5 +26,5 @@ urlpatterns = [
     path('delete-task/<int:id>/', DeleteTask.as_view(), name="delete_task"),
     path('upload/', upload_file, name='upload_file'),
     path('calender/', CalenderView.as_view(), name="calender"),
-    path('calender/<str:date>/', ChangeCalenderMonth.as_view(), name="change_month")
+    path('calender/<str:date>/<str:next>/<str:prev>/', ChangeCalenderMonth.as_view(), name="change_month")
 ]
