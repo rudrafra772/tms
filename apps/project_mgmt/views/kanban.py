@@ -29,6 +29,18 @@ class KanbanAddTask(View):
             messages.error(request, f"Error in adding task: {error_messages}")
         return redirect('kanban_board', column.board.id)
 
+class EditTaskView(View):
+    def post(self, request, id):
+        task  = Task.objects.get(id = id)
+        form = AddTaskForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Task Updated Successfully.")
+        else:
+            error_messages = form.errors.as_text()
+            messages.error(request, f"Error in adding task: {error_messages}")
+        return redirect('kanban_board', task.column.board.id)
+
 
 class UpdateTask(View):
     def post(self, request):
