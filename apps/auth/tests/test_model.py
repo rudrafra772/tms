@@ -36,3 +36,8 @@ class UserModelTests(TestCase):
     def test_email_required(self):
         with self.assertRaises(ValueError):
             UserModel.objects.create_user(email = '', username = self.username)
+
+    def test_return_str(self):
+        user = UserModel.objects.create(email = self.email, username = self.username)
+        self.assertEqual(f'{user}', f'{self.email}, {self.username}')
+

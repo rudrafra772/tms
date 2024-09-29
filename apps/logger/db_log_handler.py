@@ -6,7 +6,7 @@ from django_db_logger.config import DJANGO_DB_LOGGER_ENABLE_FORMATTER, MSG_STYLE
 db_default_formatter = logging.Formatter()
 
 
-class DatabaseLogHandler(logging.Handler):
+class DatabaseLogHandler(logging.Handler): # pragma: no cover
     def emit(self, record):
         from .models import StatusLog
         

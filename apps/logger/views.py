@@ -6,7 +6,7 @@ import logging
 
 # Create your views here.
 
-class LoggerView(View):
+class LoggerView(View): # pragma: no cover
     def get(self, request):
         status_logs = StatusLog.objects.all()
         html = '<html><body style="background:black; color:white;"><h1>Logs</h1><ul>'

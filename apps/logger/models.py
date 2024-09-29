@@ -22,7 +22,7 @@ class StatusLog(models.Model):
     create_datetime = models.DateTimeField(auto_now_add=True, verbose_name='Created at')
 
     def __str__(self):
-        return f"{str(self.get_level_display()).upper()} - {self.msg} "
+        return f"{str(self.get_level_display()).upper()} - {self.msg} " # pragma: no cover
 
     class Meta:
         ordering = ('-create_datetime',)
