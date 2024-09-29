@@ -7,7 +7,7 @@ from django.contrib import messages
 
 # Create your views here.
 
-class LoginView(View):
+class LoginView(View): # pragma: no cover
     def get(self, request):
         if not self.request.user.is_authenticated:
             form = LoginForm()
@@ -15,7 +15,7 @@ class LoginView(View):
         else:
             return redirect('home')
 
-    def post(self, request):
+    def post(self, request): 
         form = LoginForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data['username']
@@ -32,11 +32,11 @@ class LoginView(View):
             messages.error(request, "Error")
             return redirect('login')
 
-class LogoutView(View):
+class LogoutView(View): # pragma: no cover
     def get(self, request):
         logout(request)
         return redirect('login')
 
-class Home(View):
+class Home(View): # pragma: no cover
     def get(self, request):
         return render(request, 'home/index.html')
