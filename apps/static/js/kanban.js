@@ -39,6 +39,16 @@ function closeAddTaskModal(columnId) {
   document.getElementById('AddtasksModal' + columnId).classList.add('hidden');
 }
 
+function openEditTaskModal(taskId) {
+  console.log(taskId, '**task id ***')
+  document.getElementById('EdittasksModal' + taskId).classList.remove('hidden');
+}
+
+// Function to close the add task modal
+function closeEditTaskModal(taskId) {
+  document.getElementById('EdittasksModal' + taskId).classList.add('hidden');
+}
+
 // Close modals on background click or escape key press
 window.addEventListener('click', function (event) {
   const modals = document.querySelectorAll('.modal');

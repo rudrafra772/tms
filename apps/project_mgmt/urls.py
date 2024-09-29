@@ -1,6 +1,6 @@
 from django.urls import path
 from .views.kanban import (
-    KanbanBordView, KanbanAddTask, UpdateTask, DeleteTask, upload_file
+    KanbanBordView, KanbanAddTask, UpdateTask, DeleteTask, upload_file, EditTaskView
 )
 from .views.project import (
     ProjectView, AddProject, EditProject, DeleteProject
@@ -44,6 +44,7 @@ urlpatterns = [
     path('update-task/', UpdateTask.as_view(), name='update_task'),
     path('delete-task/<int:id>/', DeleteTask.as_view(), name="delete_task"),
     path('upload/', upload_file, name='upload_file'),
+    path('edit-task/<int:id>/', EditTaskView.as_view(), name="kanban_edit_task"),
     
     ######################################################################################
     #calender Urls

@@ -1,0 +1,99 @@
+<!-- Modal HTML -->
+<script>
+    tinymce.init({
+      mode: "textareas",
+      selector: 'textarea#id_description',
+  
+      // Free plugins
+      plugins: 'advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste code help wordcount hr emoticons codesample directionality imagetools textpattern toc nonbreaking template autosave',
+  
+      // Enable the sliding toolbar to display more tools before overflowing into the 3 dots menu
+      toolbar_mode: 'sliding',
+      //menubar: 'file edit view insert format tools table help',
+  
+      // Add as many toolbar buttons as possible, and the rest will go under the 3 dots
+      toolbar: 'undo redo bold italic underline strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect | bullist numlist outdent indent | link image media | emoticons charmap hr | insertdatetime table codesample | ltr rtl | searchreplace visualblocks code fullscreen preview | template toc help',
+  
+      branding: false,  // Disable TinyMCE branding and upgrade icon
+     
+      image_uploadtab: true, // Enable the "Upload" tab in the image dialog
+      images_upload_url: '/upload/', // Replace with your image upload handler
+      imagetools_toolbar: "rotateleft rotateright | flipv fliph | editimage imageoptions",
+  
+      file_picker_types: 'image', // Allow only image files for the file picker
+      file_picker_callback: function (cb, value, meta) {
+        var input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('accept', 'image/*');
+        input.onchange = function () {
+          var file = this.files[0];
+          var reader = new FileReader();
+          reader.onload = function () {
+            var imgDataUri = reader.result;
+            cb(imgDataUri, { title: file.name });
+          };
+          reader.readAsDataURL(file);
+        };
+        input.click();
+      },
+      
+  
+      // Set up additional configurations for enhanced functionality
+      notification: false,
+      message: false,
+      autosave_ask_before_unload: true,  // Enable autosave prompts before leaving the page
+      autosave_interval: "30s",          // Set autosave interval
+      autosave_restore_when_empty: true, // Restore content if the editor is empty
+      autosave_retention: "2m",          // Retain autosaved content for 2 minutes
+      height: 500,                       // Set the height of the editor
+      table_default_attributes: { border: '1' }, // Add borders to tables by default
+      insertdatetime_formats: ['%Y-%m-%d', '%H:%M:%S'], // Define datetime formats
+      
+    });
+    
+  </script>
+  
+  
+  
+  <div id="EdittasksModal{{ task.id }}" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 z-50 flex items-center justify-center"> 
+      <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-7xl h-[85%] sm:h-[80vh] overflow-y-auto z-50">
+          <h2 class="text-2xl font-bold mb-4 text-center">Task</h2>
+          <div class="w-full flex justify-center">
+          
+              <div class="w-full max-w-5xl">
+                  <h2 class="mb-4 text-md font-bold text-gray-900 dark:text-white">Edit Task</h2>
+                  <form action="{% url 'kanban_edit_task' task.id %}" method="post">
+                      {% csrf_token %}
+                      <div class="grid gap-4 sm:grid-cols-2">
+                          <div class="sm:col-span-2">
+                              <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+                              <input type="text" name="title" id="id_title" value="{{task.title|default:""}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Task Title" required>
+                          </div>
+  
+                          <div class="sm:col-span-2">
+                              <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                              <textarea id="id_description" name="description" rows="6" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Your description here">{{task.description|default:""}}</textarea>
+                          </div>
+  
+                          <div class="sm:col-span-2">
+                              <label for="user" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Assign To</label>
+                              <select name="user" id="id_user" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                  <option value="#">---------------------</option>
+                                  {% for user in users %}
+                                  <option {% if task.user.id == user.id %}selected{% endif %} value="{{user.id}}">{{user.username}}</option>
+                                  {% endfor %}
+                              </select>
+                          </div>
+                      </div>
+                      <button type="submit" class="inline-flex items-center px-5 py-2.5 mt-4 text-sm font-medium text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
+                          Add
+                      </button>
+                  </form>
+              </div>
+          </div>
+          <div class="mt-4 text-right">
+              <button class="px-4 py-2 text-sm font-medium rounded-lg bg-red-500 text-white" onclick="closeEditTaskModal('{{ task.id }}')">Close</button>
+          </div>
+      </div>
+  </div>
+  
