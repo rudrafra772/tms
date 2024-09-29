@@ -11,11 +11,12 @@ npx tailwindcss -i ./static/src/input.css -o ./static/src/output.css --watch
 TODO
 #############################################
 # kanban board
-    -project crud
-    -task management crud
-#sprint board
-#Time Sheet
+    -project crud #Done
+    -task management crud #Done CRD
 
+#sprint board 
+#Time Sheet 
+#calender #10% Doen
 
 
 
