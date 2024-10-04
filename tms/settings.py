@@ -231,7 +231,7 @@ TINYMCE_API_KEY = config('TINYMCE_API_KEY')
 
 
 
-if config("DEBUG", cast=bool) == True:
+if config("DEBUG", cast=bool) == False:
     REST_FRAMEWORK = {
         'DEFAULT_AUTHENTICATION_CLASSES': (
             #'rest_framework_simplejwt.authentication.JWTAuthentication',
