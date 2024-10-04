@@ -13,7 +13,7 @@ class StatusLogAdmin(admin.ModelAdmin):
     list_display = ('colored_msg', 'create_datetime_format')
     list_display_links = ('colored_msg',)
     list_filter = ('level',)
-    list_per_page = 1000
+    list_per_page = 100
 
     def colored_msg(self, instance):
         if instance.level in [logging.NOTSET, logging.INFO]:
