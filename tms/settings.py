@@ -27,7 +27,7 @@ SECRET_KEY = config('SECREAT_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast = bool) 
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [config('ALLOWED_HOSTS'), "127.0.0.1", "localhost"]
 
 
 # Application definition
@@ -227,4 +227,48 @@ TINYMCE_DEFAULT_CONFIG = {
                 bullist numlist outdent indent | removeformat | help',
 }
 
-TINYMCE_API_KEY = 'e2cnnbzwb5hiwxsrl8ftb3efe9w17qifkkeiys4nxu61vin5'
+TINYMCE_API_KEY = config('TINYMCE_API_KEY')
+
+
+
+if config("DEBUG", cast=bool) == True:
+    REST_FRAMEWORK = {
+        'DEFAULT_AUTHENTICATION_CLASSES': (
+            #'rest_framework_simplejwt.authentication.JWTAuthentication',
+            'rest_framework.authentication.BasicAuthentication',
+        ),
+        'DEFAULT_PARSER_CLASSES': [
+            'rest_framework.parsers.JSONParser',
+            'rest_framework.parsers.FormParser',
+            'rest_framework.parsers.MultiPartParser',
+        ],
+        'DEFAULT_RENDERER_CLASSES': [
+            'rest_framework.renderers.JSONRenderer',
+        ],
+        'DEFAULT_PERMISSION_CLASSES': [
+            'rest_framework.permissions.IsAuthenticated',  # Restrict access to authenticated users
+        ],
+        'DEFAULT_THROTTLE_CLASSES': [
+            'rest_framework.throttling.UserRateThrottle',
+            'rest_framework.throttling.AnonRateThrottle',
+        ],
+        'DEFAULT_THROTTLE_RATES': {
+            'user': '1000/day',    # Customize based on your app's traffic
+            'anon': '1000/day',
+        },
+        'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+        'PAGE_SIZE': 10,  # Adjust as per your needs
+    }
+
+else:
+    REST_FRAMEWORK = {
+        'DEFAULT_AUTHENTICATION_CLASSES': (
+            #'rest_framework_simplejwt.authentication.JWTAuthentication',
+            'rest_framework.authentication.BasicAuthentication',
+        ),
+        "DEFAULT_PARSER_CLASSES": [
+            "rest_framework.parsers.JSONParser",
+            "rest_framework.parsers.FormParser",
+            "rest_framework.parsers.MultiPartParser",
+        ],
+    }
