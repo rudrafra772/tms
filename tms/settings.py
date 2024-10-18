@@ -169,25 +169,40 @@ STATICFILES_DIRS = (
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
 
-############################################################
-#TinyMce settings
-############################################################
-TINYMCE_JS_URL = os.path.join(STATIC_URL, "tinymce/tinymce.min.js")
-TINYMCE_COMPRESSOR = True
-
 
 # Compression settings
 #############################################################
 COMPRESS_ROOT = os.path.join(BASE_DIR, 'apps/static')
-COMPRESS_ENABLED = True
-#############################################################
-
-
 if config("DEBUG", cast=bool) == True:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
     COMPRESS_ENABLED = True
 else:
     COMPRESS_ENABLED = False
+#############################################################
+
+
+############################################################
+#TinyMce settings
+############################################################
+TINYMCE_JS_URL = os.path.join(STATIC_URL, "tinymce/tinymce.min.js")
+if config("DEBUG", cast=bool) == True:
+    TINYMCE_COMPRESSOR = True
+else:
+    TINYMCE_COMPRESSOR = False
+
+TINYMCE_DEFAULT_CONFIG = {
+    'selector': 'textarea',
+    'height': 500,
+    'width': '100%',
+    'plugins': 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+    'toolbar': 'undo redo | formatselect | bold italic backcolor | \
+                alignleft aligncenter alignright alignjustify | \
+                bullist numlist outdent indent | removeformat | help',
+}
+
+#TINYMCE_API_KEY = config('TINYMCE_API_KEY')
+
+
 
 
 # Additional settings
@@ -235,17 +250,7 @@ LOGGING = {
 }
 
 
-TINYMCE_DEFAULT_CONFIG = {
-    'selector': 'textarea',
-    'height': 500,
-    'width': '100%',
-    'plugins': 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-    'toolbar': 'undo redo | formatselect | bold italic backcolor | \
-                alignleft aligncenter alignright alignjustify | \
-                bullist numlist outdent indent | removeformat | help',
-}
 
-TINYMCE_API_KEY = config('TINYMCE_API_KEY')
 
 
 
