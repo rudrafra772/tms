@@ -3,13 +3,15 @@ from django.shortcuts import render
 from .models import StatusLog
 from django.http import HttpResponse
 import logging
+from django.utils import timezone 
 
 # Create your views here.
 
 class LoggerView(View): # pragma: no cover
     def get(self, request):
-        status_logs = StatusLog.objects.all()
+        status_logs = StatusLog.objects.all().order_by('-create_datetime')
         html = '<html><body style="background:black; color:white;"><h1>Logs</h1><ul>'
+        # Convert the datetime to the local timezone
         
         for log in status_logs:
 
@@ -20,8 +22,9 @@ class LoggerView(View): # pragma: no cover
             else:
                 color = 'red'
 
+            local_time = timezone.localtime(log.create_datetime)
             html += f'''
-               <span style="color: {color};"><span style="color:white"></span>{log.create_datetime.strftime('%Y-%m-%d %I:%M %p')} - {log.get_level_display().upper()} - {log.msg}</span> <br>
+               <span style="color: {color};"><span style="color:white"></span>{local_time.strftime('%Y-%m-%d %I:%M %p')} - {log.get_level_display().upper()} - {log.msg}</span> <br>
             '''
             if log.trace:
                 trace = f"""
