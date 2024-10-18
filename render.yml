@@ -1,0 +1,4 @@
+services:
+  - type: web
+    caches:
+        - path: /opt/render/.cache/pip
