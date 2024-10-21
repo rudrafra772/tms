@@ -1,5 +1,4 @@
 from django.db import models
-from django.db import models
 from .manager import ActiveObjectsManager, ObjectsManager
 from .createupdateuser import get_current_user
 

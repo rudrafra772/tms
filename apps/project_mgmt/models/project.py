@@ -1,6 +1,5 @@
 from django.db import models
 from utils.models import BaseModel
-from apps.auth.models import UserModel
 
 
 # Create your models here.
