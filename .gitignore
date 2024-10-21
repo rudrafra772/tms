@@ -312,3 +312,6 @@ dist
 CACHE
 
 staticfiles/
+
+#Ruff
+.ruff_cache

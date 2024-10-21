@@ -213,6 +213,8 @@ STATICFILES_FINDERS = [
 ]
 
 
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
 
 LOGGING = {
     'version': 1,
