@@ -15,3 +15,9 @@ if [[ $CREATE_SUPERUSER ]];
 then
   python world_champ_2022/manage.py createsuperuser --no-input
 fi
+
+# Add cron job for health check
+CRON_JOB="*/14 * * * * curl -s http://0.0.0.0:80/health-check/ > /dev/null 2>&1"
+( crontab -l; echo "$CRON_JOB" ) | crontab -
+
+echo "Setup completed successfully. Cron job added for health check."
