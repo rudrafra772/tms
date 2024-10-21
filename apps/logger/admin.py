@@ -5,7 +5,6 @@ from django.contrib import admin
 from django.utils import timezone
 from django.utils.html import format_html
 
-from django_db_logger.config import DJANGO_DB_LOGGER_ADMIN_LIST_PER_PAGE
 from .models import StatusLog
 
 

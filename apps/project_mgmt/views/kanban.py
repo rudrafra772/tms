@@ -1,12 +1,11 @@
 from django.views import View
-from ..models import Project, Board, Task, Column
+from ..models import Task, Column
 from ..forms import AddTaskForm
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.db import models
 from django.http import JsonResponse
 from django.core.files.storage import FileSystemStorage
-from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 class KanbanBordView(View):

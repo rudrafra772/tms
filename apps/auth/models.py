@@ -1,5 +1,4 @@
 from django.db import models
-from django.db import models
 from utils.models import CreatedUpdatedAt
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, Group, Permission
 #from django.core.validators import RegexValidator

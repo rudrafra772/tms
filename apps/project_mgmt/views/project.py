@@ -1,5 +1,5 @@
 from django.views import View
-from ..models import Project, Board, Task, Column
+from ..models import Project
 from django.shortcuts import render, redirect
 from ..forms import ProjectForm
 from django.contrib import messages

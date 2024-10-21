@@ -1,6 +1,5 @@
 from django import forms
 from .models import Project, Board, Column, Task
-from django.forms import inlineformset_factory
 
 
 class ProjectForm(forms.ModelForm):

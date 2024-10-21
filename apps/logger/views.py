@@ -1,5 +1,4 @@
 from django.views import View
-from django.shortcuts import render
 from .models import StatusLog
 from django.http import HttpResponse
 import logging
