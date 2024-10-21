@@ -53,3 +53,19 @@ DB_HOST =  localhost
 # DB_HOST =  dpg-cptgcnrqf0us73c52q60-a.oregon-postgres.render.com
 
 SERVER_PLATFORM = local
+
+
+
+
+######################################################################
+#learning
+######################################################################
+*** * write clean function by using this * ***
+
+1. Short and concise.
+2. Specify a return type.
+3. Make is simple and reusable as possible.
+4. Document all your function.
+5. Handel error appropriately.
+
+######################################################################
