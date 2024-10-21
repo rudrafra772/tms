@@ -4,58 +4,17 @@
 
 npx tailwindcss -i ./static/src/input.css -o ./static/src/output.css --watch
 
-
-
-
 #############################################
 TODO
 #############################################
 # kanban board
     -project crud #Done
-    -task management crud #Done CRD
+    -task management crud #Done CRUD
 
 #sprint board 
 #Time Sheet 
-#calender #10% Doen
+#calender #10% Done
 #user management
-
-
-
-#########################################
-#.env
-#########################################
-
-
-
-
-
-
-SECREAT_KEY = "django-insecure-u1p3@7g0#dm^1us$=0dy9at9-pka)l+s3r3)04(tff*kb4k-ay"
-
-DEBUG = True
-#########################################
-#Local DB configs
-#########################################
-DB_NAME = tms
-DB_USER = postgres
-DB_PASSWORD = admin@12345
-DB_PORT = 5432
-DB_HOST =  localhost
-
-
-#########################################
-#Production DB configs
-#########################################
-# DB_NAME = tms_grlu
-# DB_USER = tms
-# DB_PASSWORD = QcPtW733gCWCRAcVcR5CrCSARIuNN76h
-# DB_PORT = 5432
-# DB_HOST =  dpg-cptgcnrqf0us73c52q60-a.oregon-postgres.render.com
-
-SERVER_PLATFORM = local
-
-
-
 
 ######################################################################
 #learning
