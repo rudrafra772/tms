@@ -4,7 +4,7 @@ from rest_framework import status
 
 def error_response(message="An error occurred", errors=None, status=status.HTTP_400_BAD_REQUEST):
     """
-    Custom function to generate an error response.
+    Function to generate an error response.
 
     Args:
         errors (dict): The error details.
@@ -36,7 +36,7 @@ def error_response(message="An error occurred", errors=None, status=status.HTTP_
 
 def response(data=None, message="Success", status_code=status.HTTP_200_OK):
     """
-    Custom function to generate a data response.
+    Function to generate a data response.
 
     Args:
         data (dict): The data to be included in the response.
