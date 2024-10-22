@@ -1,6 +1,11 @@
 {% extends "base/base.html" %}
+{% load static %}
 
 {% block content %}
+
+{% comment %} <!-- Add these links to your head section -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css"> {% endcomment %}
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
 
 
 <div class="container mx-auto px-1 py-1 max-w-screen">
@@ -156,6 +161,7 @@
         </div>
     </section>
 </div>
+
 <script>
     function updateUserCount(count, page) {
         const currentUrl = new URL(window.location);
@@ -163,6 +169,24 @@
         currentUrl.searchParams.set('page', 1); // Reset to the first page
         window.location.href = currentUrl.toString(); // Redirect to the updated URL
     }
-    </script>
+</script>
 
+<script>
+    $(document).ready(function () {
+        $('#users-table').DataTable({
+            "lengthChange": false,  // Enable length change dropdown
+            "paging": false,  // Disable pagination
+            "info":false,
+            "searching":false,
+            
+            "columnDefs": [
+                { "orderable": false, "targets": [5] },
+            ],
+            //"order": [[0, 'desc']],
+            
+        });
+    });
+</script>
+
+ 
 {% endblock content %}
