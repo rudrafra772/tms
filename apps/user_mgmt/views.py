@@ -3,8 +3,8 @@ from apps.auth.models import UserModel
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from utils.helper.pagination import get_paginated_response
-from faker import Faker
-import random
+# from faker import Faker
+# import random
 
 class UsersView(View):
     def get(self, request):
