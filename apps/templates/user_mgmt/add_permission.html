@@ -1,38 +1,144 @@
 {% extends "base/base.html" %}
 
 {% block content %}
+<!-- Include Flowbite CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.5.3/flowbite.min.css" rel="stylesheet" />
+
 <style>
     .draggable {
         cursor: grab;
     }
+
     .draggable:active {
         cursor: grabbing;
     }
 </style>
-<div class="container mx-auto px-4 py-8 max-w-screen">
+
+<div class="container mx-auto px-4 py-8 max-w-screen-lg">
     <h1 class="text-4xl font-bold text-center mb-6 text-gray-800 dark:text-gray-100">Add New Permission and Group</h1>
-    {% include "base/message.html" %}  <!-- Include any success or error messages -->
-    
+
+    {% include "base/message.html" %} <!-- Include any success or error messages -->
+
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
         <form action="" method="post">
             {% csrf_token %}
+            
             <div class="grid gap-6 sm:grid-cols-2">
+                <!-- Group Name -->
                 <div>
-                    <label for="group_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Group Name</label>
+                    <label for="group_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Group Name</label>
                     <input type="text" name="group_name" id="group_name" required 
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 
-                        placeholder="Enter group name">
-                </div>    
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                           placeholder="Enter group name">
+                </div>
             </div>
 
+            <!-- Permission Selection -->
+            <div class="flex justify-center space-x-8 p-8 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-lg mt-6">
+                
+                <!-- Available Permissions -->
+                <div class="w-1/2">
+                    <label for="available-permissions" class="block mb-2 text-lg font-semibold text-gray-900 dark:text-white">
+                        Available Permissions
+                    </label>
+                    <select id="available-permissions" multiple size="10"
+                            class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 shadow-md">
+                        <!-- Dynamically loaded permissions go here -->
+                        {% for permission in permissions %}
+                        <option value="{{ permission.id }}">{{ permission }}</option>
+                        {% endfor %}
+                    </select>
+                    
+                    <!-- Select/Remove Buttons for Available Permissions -->
+                    <div class="flex justify-between mt-4">
+                        <button type="button" id="select-all-available"
+                                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800">
+                            Select All
+                        </button>
+                       
+                    </div>
+                </div>
 
+                <!-- Arrow Buttons for Moving Permissions -->
+                <div class="flex flex-col justify-center space-y-4">
+                    <button type="button" id="move-right"
+                            class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-green-300 dark:focus:ring-green-800">
+                        &rarr;
+                    </button>
+                    <button type="button" id="move-left"
+                            class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-6 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-yellow-300 dark:focus:ring-yellow-800">
+                        &larr;
+                    </button>
+                </div>
+
+                <!-- Selected Permissions -->
+                <div class="w-1/2">
+                    <label for="selected-permissions" class="block mb-2 text-lg font-semibold text-gray-900 dark:text-white">
+                        Selected Permissions
+                    </label>
+                    <select id="selected-permissions" name="selected_permission" multiple size="10"
+                            class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 shadow-md">
+                        <!-- Selected permissions will appear here -->
+                    </select>
+                    
+                    <!-- Select/Remove Buttons for Selected Permissions -->
+                    <div class="flex justify-between mt-4">
+                        <button type="button" id="select-all-selected"
+                                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800">
+                            Select All
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
             <div class="mt-6 text-right">
-                <button type="submit" class="px-5 py-2.5 text-sm font-medium text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 hover:bg-primary-800 dark:focus:ring-primary-900">Add</button>
+                <button type="submit"
+                        class="px-5 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-300 hover:bg-blue-700 dark:bg-blue-500 dark:focus:ring-blue-900">
+                    Add
+                </button>
             </div>
         </form>
     </div>
 </div>
 
+<!-- Include Flowbite JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.5.3/flowbite.min.js"></script>
 
+<script>
+    document.getElementById('move-right').addEventListener('click', function () {
+        moveOptions('available-permissions', 'selected-permissions');
+    });
+
+    document.getElementById('move-left').addEventListener('click', function () {
+        moveOptions('selected-permissions', 'available-permissions');
+    });
+
+    // Function to move options between select boxes
+    function moveOptions(sourceId, targetId) {
+        const sourceSelect = document.getElementById(sourceId);
+        const targetSelect = document.getElementById(targetId);
+        Array.from(sourceSelect.selectedOptions).forEach(option => {
+            targetSelect.appendChild(option);
+        });
+    }
+
+    // Select all options in the Available Permissions box
+    document.getElementById('select-all-available').addEventListener('click', function () {
+        selectAllOptions('available-permissions');
+    });
+
+    // Select all options in the Selected Permissions box
+    document.getElementById('select-all-selected').addEventListener('click', function () {
+        selectAllOptions('selected-permissions');
+    });
+
+    // Function to select all options in a given select box
+    function selectAllOptions(selectId) {
+        const select = document.getElementById(selectId);
+        Array.from(select.options).forEach(option => option.selected = true);
+    }
+
+</script>
 
 {% endblock content %}

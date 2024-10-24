@@ -45,8 +45,11 @@ class RolesAndPermissionView(View):
 
 class AddPermissionView(View):
     def get(self, request):
-        content_types = ContentType.objects.all()
-        return render(request, 'user_mgmt/add_permission.html', {'content_types': content_types})
+        permissions = Permission.objects.all()
+        return render(request, 'user_mgmt/add_permission.html', {'permissions': permissions})
+    
+    def post(self, request):
+        pass
 
 
 
