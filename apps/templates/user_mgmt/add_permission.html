@@ -1,0 +1,38 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+<style>
+    .draggable {
+        cursor: grab;
+    }
+    .draggable:active {
+        cursor: grabbing;
+    }
+</style>
+<div class="container mx-auto px-4 py-8 max-w-screen">
+    <h1 class="text-4xl font-bold text-center mb-6 text-gray-800 dark:text-gray-100">Add New Permission and Group</h1>
+    {% include "base/message.html" %}  <!-- Include any success or error messages -->
+    
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="grid gap-6 sm:grid-cols-2">
+                <div>
+                    <label for="group_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Group Name</label>
+                    <input type="text" name="group_name" id="group_name" required 
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 
+                        placeholder="Enter group name">
+                </div>    
+            </div>
+
+
+            <div class="mt-6 text-right">
+                <button type="submit" class="px-5 py-2.5 text-sm font-medium text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 hover:bg-primary-800 dark:focus:ring-primary-900">Add</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+{% endblock content %}
