@@ -49,7 +49,9 @@ class AddPermissionView(View):
         return render(request, 'user_mgmt/add_permission.html', {'permissions': permissions})
     
     def post(self, request):
-        pass
+        data = request.POST.getlist('selected_permission[]')
+        #print(data, '***')
+        return redirect('r_and_p')
 
 
 
