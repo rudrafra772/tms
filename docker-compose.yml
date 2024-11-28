@@ -1,0 +1,12 @@
+services:
+  web:
+    image: tms:latest
+    working_dir: /app
+    build:
+      context: .
+    env_file:
+      - .env
+    command: bash -c "./build.sh"
+    ports:
+      - "8000:8000"
+    
