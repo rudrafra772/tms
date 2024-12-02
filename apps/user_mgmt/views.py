@@ -50,9 +50,20 @@ class AddPermissionView(View):
     
     def post(self, request):
         data = request.POST.getlist('selected_permission[]')
-        #print(data, '***')
+        name = request.POST.get('group_name')
+        group = Group.objects.create(name=name)
+        permission_id_list = [int(item) for item in data]
+        #group.permissions.add(int_data)
+        for permission_id in permission_id_list:
+            group.permissions.add(permission_id)
+        messages.success(request, "Role and permission created successfully.")
         return redirect('r_and_p')
 
+class DeletePermissionView(View):
+    def post(self, request, id):
+        Group.objects.get(id = id).delete()
+        messages.success(request, "Role and permission deleted successfully.")
+        return redirect('r_and_p')
 
 
     
