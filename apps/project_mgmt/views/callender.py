@@ -13,15 +13,16 @@ class CalenderView(View):
             'calender':calender,
             'month':date.month, 
             'year':date.year, 
-            'current_date':date
+            'current_date':date,
+            'calender_date':date
         }
         return render(request, 'project_mgmt/calender.html', context)
     
 
 class ChangeCalenderMonth(View):
     def get(self, request, date, next, prev):
-        current_date = str_to_date(date)
-        first_date = current_date.replace(day=1)
+        calender_date = str_to_date(date)
+        first_date = calender_date.replace(day=1)
         if prev == "1":
             previous_month = first_date - timedelta(days= 1)
             calender = get_month_calender(previous_month.year, previous_month.month)
@@ -29,13 +30,14 @@ class ChangeCalenderMonth(View):
                 'calender':calender,
                 'month':previous_month.month, 
                 'year':previous_month.year, 
-                'current_date':previous_month,
+                'calender_date':previous_month,
+                'current_date':current_date(),
                 'next': 0,
                 'prev': 1,
                 }
             return render(request, 'project_mgmt/calender.html', context)
         if next == "1":
-            last_day_of_current_month = get_month_calender(current_date.year, current_date.month)[-1]
+            last_day_of_current_month = get_month_calender(calender_date.year, calender_date.month)[-1]
             last_day_of_current_month = last_day_of_current_month[-1]
             next_month_date = last_day_of_current_month + timedelta(days=1)
             calender = get_month_calender(next_month_date.year, next_month_date.month)
@@ -43,7 +45,8 @@ class ChangeCalenderMonth(View):
                 'calender':calender,
                 'month':next_month_date.month, 
                 'year':next_month_date.year, 
-                'current_date':next_month_date,
+                'calender_date':next_month_date,
+                'current_date':current_date(),
                 'next': 0,
                 'prev': 1,
             }
