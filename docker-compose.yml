@@ -1,6 +1,6 @@
 services:
   web:
-    image: tms:latest
+    image: 7721110/tms:latest
     working_dir: /app
     build:
       context: .
