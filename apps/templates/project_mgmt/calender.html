@@ -10,16 +10,16 @@
     <div class="mx-auto mt-10 border-b p-2">
     <div class="wrapper bg-white rounded shadow w-full overflow-x-auto">
       <div class="flex justify-center  p-4 text-center bg-gray-500 shadow-md text-white text-xl font-extrabold">
-        <a href="{% url "change_month" current_date 0 1 %}" type="submit" class="inline-block bg-white text-black p-1 rounded-lg shadow-md">
+        <a href="{% url "change_month" calender_date 0 1 %}" type="submit" class="inline-block bg-white text-black p-1 rounded-lg shadow-md">
           <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 19-7-7 7-7"/>
           </svg>
         </a>
 
         <div class="inline-block mx-10">
-          {{current_date|date:"M Y"}}
+          {{calender_date|date:"M Y"}}
         </div>
-        <a href="{% url "change_month" current_date 1 0 %}" class="inline-block bg-white text-black p-1 rounded-lg shadow-md">
+        <a href="{% url "change_month" calender_date 1 0 %}" class="inline-block bg-white text-black p-1 rounded-lg shadow-md">
           <svg class="w-6 h-6 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"/>
           </svg>
@@ -54,7 +54,7 @@
               <span class="xl:block lg:block md:block sm:block hidden">Saturday</span>
               <span class="xl:hidden lg:hidden md:hidden sm:hidden block">Sat</span>
             </th>
-            <th class="p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
+            <th class="p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs bg-red-500 text-white">
               <span class="xl:block lg:block md:block sm:block hidden">Sunday</span>
               <span class="xl:hidden lg:hidden md:hidden sm:hidden block">Sun</span>
             </th>
@@ -65,8 +65,14 @@
           <tr class="text-center h-20">
             {% for date in week %}
             {% if date.month == month %}
-              <td class="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-blue-300 ">
-                <div class="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
+            {% if date.day == current_date.day and date == current_date %}
+              <td class="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-blue-300 bg-green-300"> 
+            {% elif date.day == week.6.day %}
+              <td class="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-blue-300 bg-red-200"> 
+            {% else %}
+              <td class="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-blue-300"> 
+            {% endif %}
+                <div class="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 overflow-hidden">
                   <div class="top h-5 w-full">
                     <span class="text-gray-500">{{date.day}}</span>
                   </div>
@@ -96,7 +102,7 @@
               </td>
             {% else %}
             <td class="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition duration-500 ease hover:bg-gray-300 bg-gray-300">
-              <div class="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
+              <div class="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 overflow-hidden">
                 <div class="top h-5 w-full">
                   <span class="text-gray-500">{{date.day}}</span>
                 </div>

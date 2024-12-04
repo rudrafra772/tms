@@ -3,6 +3,7 @@ from django.views import View
 from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm
 from django.contrib import messages
+from .models import UserModel
 
 # Create your views here.
 
@@ -38,4 +39,5 @@ class LogoutView(View): # pragma: no cover
 
 class Home(View): # pragma: no cover
     def get(self, request):
-        return render(request, 'home/index.html')
+        total_user = UserModel.objects.all().count()
+        return render(request, 'home/index.html', {"total_user":total_user})
