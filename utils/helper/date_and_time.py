@@ -53,12 +53,30 @@ def str_to_date(date) -> date:
     return datetime.strptime(date, "%Y-%m-%d").date()
 
 def datetime_in_timezone(date_and_time:datetime) -> datetime:
+    """
+        A function that converts a datetime in to current time zone.
+
+        :param date_and_time:
+        :type date_and_time: datetime
+
+        :return: the datetime as the `datetime` object.
+        :rtype: datetime 
+    """
 
     time_zone = pytz.timezone(settings.TIME_ZONE)
-
     return date_and_time.astimezone(time_zone)
 
 def formatted_time(time:timedelta) -> str:
+    """
+        A function that convert the time in to the formatted "00:00:00" string.
+
+        :param time:
+        :type time: timedelta
+
+        :return: the time in `00:00:00` format.
+        :rtype: str
+    """
+
     seconds = time.seconds
     sec = seconds % 60
     min = seconds // 60
