@@ -10,6 +10,9 @@ from django.contrib.contenttypes.models import ContentType
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from .models import Attendance
+from datetime import datetime
+
 class UsersView(View):
     def get(self, request):
         # Get all users excluding the deleted ones
@@ -65,6 +68,14 @@ class DeletePermissionView(View):
         messages.success(request, "Role and permission deleted successfully.")
         return redirect('r_and_p')
 
+class ClockIn(View):
+    def get(self, request):
+        try:
+            Attendance.objects.get(user = request.user, in_time__date = datetime.now().date())
+        except Attendance.DoesNotExist:
+            Attendance.objects.create(user = request.user, in_time = datetime.now())
+        messages.success(request, "You are now clocked in...")
+        return redirect('home')
 
     
 # from django.shortcuts import render, redirect
