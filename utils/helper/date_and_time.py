@@ -1,4 +1,6 @@
-from datetime import datetime, date, time
+from datetime import datetime, date, time, timedelta
+from django.conf import settings
+import pytz
 
 def current_date() -> date:
     """
@@ -49,3 +51,16 @@ def str_to_date(date) -> date:
 
     """
     return datetime.strptime(date, "%Y-%m-%d").date()
+
+def datetime_in_timezone(date_and_time:datetime) -> datetime:
+
+    time_zone = pytz.timezone(settings.TIME_ZONE)
+
+    return date_and_time.astimezone(time_zone)
+
+def formatted_time(time:timedelta) -> str:
+    seconds = time.seconds
+    sec = seconds % 60
+    min = seconds // 60
+    hr = min // 60
+    return f"{hr:02}:{min:02}:{sec:02}"

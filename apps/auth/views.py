@@ -4,6 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm
 from django.contrib import messages
 from .models import UserModel
+from apps.user_mgmt.models import Attendance
+from datetime import datetime
 
 # Create your views here.
 
@@ -40,4 +42,5 @@ class LogoutView(View): # pragma: no cover
 class Home(View): # pragma: no cover
     def get(self, request):
         total_user = UserModel.objects.all().count()
-        return render(request, 'home/index.html', {"total_user":total_user})
+        attendance = Attendance.objects.filter(user = request.user, in_time__date = datetime.now().date()).first()
+        return render(request, 'home/index.html', {"total_user":total_user, "attendance":attendance})

@@ -2,7 +2,26 @@
 
 {% extends "base/base.html" %}
 
+{% include "base/message.html" %}
+
 {% block content %}
+{% if attendance %}
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-0 mb-4">
+    <a  href="#" class="bg-gradient-to-r from-yellow-400 to-red-500 text-white rounded-lg p-2 shadow-lg flex flex-col justify-center items-center transform transition hover:scale-105">
+        <h3 class="text-2xl mb-1 font-extrabold">Clock-out</h3>
+        <p class="font-medium">Duration : <span id="timer">{{attendance.duration }}</span></p>
+    </a>
+</div>
+{% else %}
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-0 mb-4">
+    <a  href="{% url "clock_in" %}" class="bg-gradient-to-r from-teal-400 to-green-500 text-white rounded-lg p-2 shadow-lg flex flex-col justify-center items-center transform transition hover:scale-105">
+        <h3 class="text-2xl mb-1 font-extrabold">Clock-in</h3>
+        {% comment %} <p class="font-medium">Duration:</p> {% endcomment %}
+    </a>
+</div>
+
+{% endif %}
+
 
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
     <div class="bg-gradient-to-r from-blue-400 to-blue-500 text-white rounded-lg p-6 shadow-lg flex flex-col justify-center items-center transform transition hover:scale-105">
@@ -22,5 +41,58 @@
         <p class="text-3xl font-extrabold">45</p>
     </div>
 </div>
+
+<script>
+    window.onload = function() {
+        // Get the timer element and the initial time in HH:MM:SS format from the Django template
+        var timerElement = document.getElementById('timer');
+        var initialTime = timerElement.textContent;  // Use textContent to get the current text value, e.g., "00:09:05"
+    
+        // Convert HH:MM:SS to seconds
+        function convertToSeconds(time) {
+            var parts = time.split(':');
+            var hours = parseInt(parts[0], 10);
+            var minutes = parseInt(parts[1], 10);
+            var seconds = parseInt(parts[2], 10);
+            return hours * 3600 + minutes * 60 + seconds;
+        }
+    
+        // Convert seconds back to HH:MM:SS format
+        function formatTime(seconds) {
+            var hours = Math.floor(seconds / 3600);
+            var minutes = Math.floor((seconds % 3600) / 60);
+            var remainingSeconds = seconds % 60;
+            return String(hours).padStart(2, '0') + ":" + 
+                   String(minutes).padStart(2, '0') + ":" + 
+                   String(remainingSeconds).padStart(2, '0');
+        }
+    
+        // Convert the initial time (HH:MM:SS) to total seconds
+        var initialTimeInSeconds = convertToSeconds(initialTime);
+    
+        // Get the current client time when the page is loaded
+        var pageLoadTime = new Date();
+    
+        // Function to update the timer
+        function startTimer() {
+            var interval = setInterval(function() {
+                // Calculate the current time difference since the page was loaded
+                var currentTime = new Date();
+                var timeDifference = Math.floor((currentTime - pageLoadTime) / 1000);
+    
+                // Adjust the initial time based on the time difference
+                var adjustedTimeInSeconds = initialTimeInSeconds + timeDifference;
+    
+                // Update the displayed timer
+                timerElement.textContent = formatTime(adjustedTimeInSeconds);
+            }, 1000);  // Update the timer every 1000 milliseconds (1 second)
+        }
+    
+        // Start the timer
+        startTimer();
+    };
+    
+    
+</script>
 
 {% endblock content %}
