@@ -90,32 +90,24 @@ def filter_by_user(data:QuerySet) -> QuerySet:
     """
     return data.filter(is_superuser = False, is_staff = False, is_active = True)
 
-def sort_data(data: QuerySet, sort_fields: List[Union[str, dict]]) -> QuerySet:
+def sort_data(data: QuerySet, sort_field: str, current_order: str) -> QuerySet:
     """
-    Function to sort data from the provided queryset.
+    Function to sort data from the provided queryset, toggling between ascending and descending order.
 
     Args:
         data (QuerySet): The initial queryset of data to sort.
-        sort_fields (List[Union[str, dict]]): A list of fields to sort by.
-            - Can be simple field names (str) for ascending order.
-            - Can be a dictionary with field name and order, e.g., {'field': 'asc'} or {'field': 'desc'}.
+        sort_field (str): The field to sort by.
+        current_order (str): The current sort order ("asc" or "desc").
 
     Returns:
-        QuerySet: The sorted queryset.
+        QuerySet: The Sorted queryset with results matching the query or exact match criteria.
     """
-    if not sort_fields:
+    if not sort_field:
         return data
-
-    ordering = []
-
-    for field in sort_fields:
-        if isinstance(field, str):
-            ordering.append(field)  # Ascending order by default
-        elif isinstance(field, dict):
-            for key, order in field.items():
-                if order.lower() == 'desc':
-                    ordering.append(f'-{key}')
-                else:
-                    ordering.append(key)
-
-    return data.order_by(*ordering)
+  
+    # Apply sorting based on the new order
+    if current_order == 'asc':
+        sorted_data = data.order_by(Lower(sort_field))
+    else:
+        sorted_data = data.order_by(Lower(sort_field).desc())
+    return sorted_data
