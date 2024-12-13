@@ -89,3 +89,33 @@ def filter_by_user(data:QuerySet) -> QuerySet:
         QuerySet: The filtered queryset with results matching the query or exact match criteria.
     """
     return data.filter(is_superuser = False, is_staff = False, is_active = True)
+
+def sort_data(data: QuerySet, sort_fields: List[Union[str, dict]]) -> QuerySet:
+    """
+    Function to sort data from the provided queryset.
+
+    Args:
+        data (QuerySet): The initial queryset of data to sort.
+        sort_fields (List[Union[str, dict]]): A list of fields to sort by.
+            - Can be simple field names (str) for ascending order.
+            - Can be a dictionary with field name and order, e.g., {'field': 'asc'} or {'field': 'desc'}.
+
+    Returns:
+        QuerySet: The sorted queryset.
+    """
+    if not sort_fields:
+        return data
+
+    ordering = []
+
+    for field in sort_fields:
+        if isinstance(field, str):
+            ordering.append(field)  # Ascending order by default
+        elif isinstance(field, dict):
+            for key, order in field.items():
+                if order.lower() == 'desc':
+                    ordering.append(f'-{key}')
+                else:
+                    ordering.append(key)
+
+    return data.order_by(*ordering)
