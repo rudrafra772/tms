@@ -1,6 +1,7 @@
 from typing import List, Union, Dict, Any
 from django.db.models import QuerySet, Q
 from django.db import models
+from django.db.models.functions import Lower
 
 def search(query: Union[str, bool, int, None], data: QuerySet, search_fields: List[Union[str, Dict[str, Any]]]) -> QuerySet:
     """
