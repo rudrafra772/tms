@@ -71,12 +71,25 @@ class DeletePermissionView(View):
 class ClockIn(View):
     def get(self, request):
         try:
-            Attendance.objects.get(user = request.user, in_time__date = datetime.now().date())
+            attendance = Attendance.objects.get(user = request.user, in_time__date = datetime.now().date())
         except Attendance.DoesNotExist:
-            Attendance.objects.create(user = request.user, in_time = datetime.now())
+            attendance = Attendance.objects.create(user = request.user, in_time = datetime.now())
+        attendance.out_time = None
+        attendance.save()
         messages.success(request, "You are now clocked in...")
         return redirect('home')
+    
 
+class ClockOut(View):
+    def get(self, request):
+        try:
+            attendance = Attendance.objects.get(user = request.user, in_time__date = datetime.now().date())
+        except Attendance.DoesNotExist:
+            attendance = Attendance.objects.create(user = request.user, in_time = datetime.now())
+        attendance.out_time = datetime.now()
+        attendance.save()
+        messages.success(request, "You are now clocked out...")
+        return redirect('home')
     
 # from django.shortcuts import render, redirect
 # from django.contrib import messages
