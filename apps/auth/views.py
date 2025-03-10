@@ -42,5 +42,8 @@ class LogoutView(View): # pragma: no cover
 class Home(View): # pragma: no cover
     def get(self, request):
         total_user = UserModel.objects.all().count()
-        attendance = Attendance.objects.filter(user = request.user, in_time__date = datetime.now().date()).first()
+        try:
+            attendance = Attendance.objects.get(user = request.user, in_time__date = datetime.now().date())
+        except Attendance.DoesNotExist:
+            attendance = None
         return render(request, 'home/index.html', {"total_user":total_user, "attendance":attendance})

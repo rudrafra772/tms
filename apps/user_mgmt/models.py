@@ -17,7 +17,6 @@ class Attendance(BaseModel, models.Model):
             return self.out_time - self.in_time
         elif self.in_time:
             output = datetime_in_timezone(datetime.now()) - datetime_in_timezone(self.in_time)
-            
             return formatted_time(output)
         else:
             return None

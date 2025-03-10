@@ -1,6 +1,6 @@
 from .views import (
     UsersView, RolesAndPermissionView, AddPermissionView, DeletePermissionView, 
-    ClockIn,
+    ClockIn, ClockOut
 )
 from django.urls import path
 
@@ -11,4 +11,5 @@ urlpatterns = [
     path('add_permission/', AddPermissionView.as_view(), name="add_permission"),
     path('delete_permission/<int:id>/', DeletePermissionView.as_view(), name="delete_permission"),
     path('clock-in/', ClockIn.as_view(), name="clock_in"),
+    path('clock-out/', ClockOut.as_view(), name="clock_out")
 ]
