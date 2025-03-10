@@ -1,27 +1,43 @@
 // Function to open the task details modal
+// Function to open the task details modal
 function openTaskDetailsModal(taskId) {
   // Show the modal
   var modal = document.getElementById('taskDetailsModal' + taskId);
   modal.classList.remove('hidden');
 
+  // Select the textarea
+  var textareaSelector = `#id_description_${taskId}`;
+
+  // Destroy TinyMCE instance if it already exists
+  if (tinymce.get(textareaSelector.replace('#', ''))) {
+      tinymce.get(textareaSelector.replace('#', '')).remove();
+  }
+
   // Initialize TinyMCE for the specific textarea
-  initializeTinyMCE(`#id_description_${taskId}`);
+  initializeTinyMCE(textareaSelector);
 }
 
 // Function to initialize TinyMCE
 function initializeTinyMCE(selector) {
   tinymce.init({
-    selector: selector,
-    plugins: 'advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste code help wordcount hr emoticons codesample directionality imagetools textpattern toc nonbreaking template autosave', // No plugins needed for read-only
-    toolbar: false, // No toolbar
-    menubar: false, // No menu bar
-    readonly: true, // Set the editor to read-only mode
-    branding: false,
-    statusbar: false, 
-    height: 500,
-    resize: false, // Disable resizing
-});
-
+      selector: selector,
+      plugins: 'advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste code help wordcount hr emoticons codesample directionality imagetools textpattern toc nonbreaking template autosave',
+      toolbar: false,
+      menubar: false,
+      readonly: true,
+      branding: false,
+      statusbar: false,
+      height: 500,
+      resize: false,
+      setup: function (editor) {
+          editor.on('init', function () {
+              var textarea = document.querySelector(selector);
+              if (textarea) {
+                  editor.setContent(textarea.value); // Set existing content after init
+              }
+          });
+      }
+  });
 }
 
 // Function to close the task details modal
