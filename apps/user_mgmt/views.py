@@ -61,6 +61,22 @@ class AddPermissionView(View):
             group.permissions.add(permission_id)
         messages.success(request, "Role and permission created successfully.")
         return redirect('r_and_p')
+    
+class EditPermissionsView(View):
+    def get(self, request, id):
+        group = Group.objects.get(id=id)
+        permissions = Permission.objects.all()
+        selected_permissions = group.permissions.all()
+        permissions = permissions.exclude(id__in=selected_permissions.values_list('id', flat=True))
+        return render(request, 'user_mgmt/edit_permission.html', {'permissions': permissions, 'selected_permissions': selected_permissions, 'id': id, 'group': group })
+    
+    def post(self, request, id):
+        data = request.POST.getlist('selected_permission[]')
+        group = Group.objects.get(id=id)
+        permission_id_list = [int(item) for item in data]
+        group.permissions.set(permission_id_list)
+        messages.success(request, "Role and permission updated successfully.")
+        return redirect('r_and_p')
 
 class DeletePermissionView(View):
     def post(self, request, id):
@@ -90,6 +106,8 @@ class ClockOut(View):
         attendance.save()
         messages.success(request, "You are now clocked out...")
         return redirect('home')
+    
+
     
 # from django.shortcuts import render, redirect
 # from django.contrib import messages
