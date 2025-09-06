@@ -1,4 +1,6 @@
 name: CI/CD for Docker Image
+permissions:
+  contents: read
 
 on:
   push:
