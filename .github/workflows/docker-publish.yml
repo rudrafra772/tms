@@ -31,6 +31,16 @@ jobs:
           # Create .env from example.env
           envsubst < example.env > .env
           echo ".env generated successfully."
+        env:
+          SECREAT_KEY: ${{ secrets.SECREAT_KEY }}
+          ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+          DEBUG: ${{ secrets.DEBUG }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          TINYMCE_API_KEY: ${{ secrets.TINYMCE_API_KEY }}
        
       # Step 3: Build the Docker image
       - name: Build the Docker image
