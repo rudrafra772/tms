@@ -6,8 +6,6 @@ WORKDIR /app
 
 COPY . /app
 
-COPY .env /app/.env
-
 # Install GTK-3 and other necessary dependencies
 # RUN apt-get update && apt-get install -y \
 #     libgtk-3-dev 
