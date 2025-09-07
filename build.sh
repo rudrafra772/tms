@@ -4,8 +4,6 @@ set -o errexit
 
 ls
 
-cat .env
-
 echo "Updating package list and installing required packages..."
 apt-get update && apt-get install -y 
 echo "Package installation complete."
