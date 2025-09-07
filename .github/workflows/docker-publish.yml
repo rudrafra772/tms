@@ -25,20 +25,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Generate .env dynamically
-        env:
-          SECREAT_KEY: ${{ secrets.SECREAT_KEY }}
-          ALLOWED_HOSTS: ${{ vars.ALLOWED_HOSTS }}
-          DEBUG: ${{ vars.DEBUG }}
-          DB_NAME: ${{ vars.DB_NAME }}
-          DB_USER: ${{ vars.DB_USER }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_PORT: ${{ vars.DB_PORT }}
-          DB_HOST: ${{ vars.DB_HOST }}
-          TINYMCE_API_KEY: ${{ vars.TINYMCE_API_KEY }}
-        run: |
-          envsubst < example.env > .env
        
       # Step 3: Build the Docker image
       - name: Build the Docker image
