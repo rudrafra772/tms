@@ -27,8 +27,19 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Generate .env dynamically
+        shell: bash
         run: |
           echo "Generating .env from example.env..."
+          
+          # Export all available environment variables except GitHub internal ones
+          for var in $(compgen -v); do
+            if [[ "$var" =~ ^GITHUB_ ]]; then
+              continue
+            fi
+            export "$var=${!var}"
+          done
+
+          # Replace placeholders in example.env with actual secret values
           envsubst < example.env > .env
           echo ".env generated successfully"
 
