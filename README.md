@@ -67,3 +67,12 @@ You are free to use, modify, and distribute this software for personal or commer
 The software is provided **“as is”**, without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and noninfringement. In no event shall the authors or copyright holders be liable for any claim, damages, or other liability, whether in an action of contract, tort, or otherwise, arising from, out of, or in connection with the software or the use or other dealings in the software.  
 
 For more details, see the [LICENSE](./LICENSE) file in this repository.
+
+
+## ⚠️ Disclaimer
+
+This project is provided **as is**, without any warranties or guarantees.  
+The authors and contributors are **not liable** for any damages, losses, or issues that may arise from using this software.  
+
+By using this project, you agree to take full responsibility for any outcomes resulting from its use.
+
