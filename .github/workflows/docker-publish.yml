@@ -27,22 +27,31 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Generate .env dynamically
-        shell: bash
         run: |
-          echo "Generating .env from example.env..."
+          # Create .env from example.env
+          echo "Generating .env file..."
           
-          # Export all available environment variables except GitHub internal ones
-          for var in $(compgen -v); do
-            if [[ "$var" =~ ^GITHUB_ ]]; then
-              continue
+          # Read example.env line by line
+          while IFS= read -r line
+          do
+            # Skip empty lines
+            [ -z "$line" ] && continue
+
+            # Extract the key name from the line (before =)
+            key=$(echo "$line" | cut -d '=' -f 1)
+
+            # Get value from GitHub environment or secret
+            value="${{ secrets[key] }}"  # fallback to secrets
+            if [ -z "$value" ]; then
+              value="${{ env[key] }}"
             fi
-            export "$var=${!var}"
-          done
 
-          # Replace placeholders in example.env with actual secret values
-          envsubst < example.env > .env
-          echo ".env generated successfully"
+            # Replace line with key=value
+            echo "$key=$value" >> .env
+          done < example.env
 
+          echo ".env generated successfully."
+       
       # Step 3: Build the Docker image
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag 7721110/tms:latest --build-arg ENV_FILE=.env
