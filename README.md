@@ -2,7 +2,21 @@
 
 A simple Task Management System built with **Django** to manage tasks, track progress, and organize work efficiently.
 
+## 📸 Screenshots
+
+### 👤 Users
+<img width="2104" height="1516" alt="tms rudramehta site_users_ (1)" src="https://github.com/user-attachments/assets/e9320678-6ceb-4610-a09c-fcd6c2bd1443" />
+
+
+### 📋 Kanban Board
+<img width="2880" height="1548" alt="tms rudramehta site_kanban-board_1_ (1)" src="https://github.com/user-attachments/assets/314c0b76-3f4b-4f09-8f95-2cf1dd91a292" />
+
+
+### 📅 Calendar
+<img width="2880" height="1548" alt="tms rudramehta site_calender_" src="https://github.com/user-attachments/assets/02efadf0-a3c7-47c2-8359-32f8ff10a30e" />
+
 ---
+
 
 ## 🚀 Features
 - User authentication (login, signup, logout)
