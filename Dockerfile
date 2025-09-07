@@ -12,5 +12,4 @@ COPY . /app
 
 # COPY ./build.sh /app/build.sh
 RUN chmod +x /app/build.sh
-RUN chmod +x /app/.env
 
