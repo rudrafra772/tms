@@ -38,7 +38,7 @@ jobs:
             if [[ "${secret_name}" == GITHUB_* ]]; then
               continue
             fi
-            export "${secret_name}=${!secret_name}"
+            export "${secret_name}=${secret_name}"
           done
 
           # Replace placeholders in example.env with actual secret values
