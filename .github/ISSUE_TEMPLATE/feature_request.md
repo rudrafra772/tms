@@ -1,20 +1,30 @@
 ---
 name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: ''
+about: Suggest an idea for any feature
+title: "[Feature ]"
+labels: enhancement
 assignees: ''
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+---
+name: Feature request
+about: Suggest a new feature or improvement for TMS
+title: "[FEATURE] "
+labels: enhancement
+assignees: 
+---
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+## ❓ Is your feature request related to a problem?
+A clear and concise description of what the problem is.  
+Example: “I’m always frustrated when the task filter doesn’t remember my last selection.”
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+## 💡 Describe the solution you’d like
+A clear and concise description of what you want to happen.  
+Explain how this feature will improve TMS.
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+## ⚖️ Describe alternatives you’ve considered
+A clear and concise description of any alternative solutions or features you’ve considered.
+
+## 📎 Additional Context
+Add any other context, screenshots, or mockups to help explain your request.
