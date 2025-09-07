@@ -29,7 +29,7 @@ jobs:
       - name: Generate .env dynamically
         run: |
           # Create .env from example.env
-          cat example.env > .env
+          envsubst < example.env > .env
           echo ".env generated successfully."
        
       # Step 3: Build the Docker image
