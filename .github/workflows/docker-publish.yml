@@ -29,27 +29,7 @@ jobs:
       - name: Generate .env dynamically
         run: |
           # Create .env from example.env
-          echo "Generating .env file..."
-          
-          # Read example.env line by line
-          while IFS= read -r line
-          do
-            # Skip empty lines
-            [ -z "$line" ] && continue
-
-            # Extract the key name from the line (before =)
-            key=$(echo "$line" | cut -d '=' -f 1)
-
-            # Get value from GitHub environment or secret
-            value="${{ secrets[key] }}"  # fallback to secrets
-            if [ -z "$value" ]; then
-              value="${{ env[key] }}"
-            fi
-
-            # Replace line with key=value
-            echo "$key=$value" >> .env
-          done < example.env
-
+          cat example.env > .env
           echo ".env generated successfully."
        
       # Step 3: Build the Docker image
