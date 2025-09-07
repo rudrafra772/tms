@@ -31,14 +31,18 @@ jobs:
         run: |
           echo "Generating .env from example.env..."
 
-          # Export all secrets currently available in the runner
-          # This includes both environment secrets (from the targeted environment)
-          # and repository secrets referenced in the workflow
-          for secret_name in $(compgen -v); do
-            if [[ "${secret_name}" == GITHUB_* ]]; then
+          # Export all GitHub secrets dynamically without touching readonly vars
+          for secret_name in $(compgen -v | grep '^INPUT_'); do
+            export "${secret_name#INPUT_}=${!secret_name}"
+          done
+
+          # Also export only the secrets GitHub exposes (from secrets context)
+          for secret_name in $(compgen -v | grep -v '^GITHUB_'); do
+            # Skip readonly variables
+            if [[ "$secret_name" =~ ^(BASHOPTS|PIPESTATUS|PPID|SHELLOPTS)$ ]]; then
               continue
             fi
-            export "${secret_name}=${secret_name}"
+            export "$secret_name=${!secret_name}"
           done
 
           # Replace placeholders in example.env with actual secret values
