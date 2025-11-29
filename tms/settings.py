@@ -27,7 +27,7 @@ SECRET_KEY = config('SECREAT_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast = bool) 
 
-ALLOWED_HOSTS = [config('ALLOWED_HOSTS'), "127.0.0.1", "localhost", "tms.rudramehta.site"]
+ALLOWED_HOSTS = [config('ALLOWED_HOSTS'), "127.0.0.1", "localhost", "tms.rudramehta.in"]
 
 
 # Application definition
@@ -70,7 +70,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 CSRF_TRUSTED_ORIGINS = [
     "http://192.168.0.103",
-    "https://tms.rudramehta.site"
+    "https://tms.rudramehta.in"
 ]
 
 CORS_ALLOW_HEADERS = [
